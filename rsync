@@ -1,0 +1,43 @@
+author: ainray
+date: 20180129
+topic: rsync
+    
+    Some options
+        -a, archive mode, -rlptgoD
+        -R, relative path
+
+    Copy files
+
+        rsync -av --info=progress2 /mnt/wing/Prj/03-refs/ 03-refs
+        
+        Be careful that the leading "/" of the source, if no "/", the last part of source is "03-refs",
+    then the new sub-directory is created in the destination directory "03-refs", in most case, that is
+    not what you want.
+        Sometimes, you want synchronize the source and destination directories, thus need to delete 
+    redundant files in the destination directory which do not exist in source.
+
+        rsync -av --info=progress2 --delete 03-refs/ /mnt/wing/Prj/03-refs/
+
+    Symbolic link
+        As usual symbolic link, link plus "/" refer to its destination directory, so if you just want to 
+    copy the link file and its referent  path, no "/".
+        When used -aR option, and the symbolic link file is prefixed some parent path, then it is copied 
+    as usual file ( the referent path is still valid.). Removing it from its parent path is safe.
+        
+            rsync -avR --info=progress2 /home/inray/utorrent d1/
+            rm -rf d1/home  # safe action
+
+        You can also limit the implied path by adding "./" in the path (ending "/" is necessary).
+
+            rsync -avR --info=progress2 /home/inray/./utorrent d1/
+
+        Be careful that the difference between 
+
+            rsync -avR --info=progress2 /home/inray/utorrent d1/
+    and 
+            rsync -avR --info=progress2 /home/inray/utorrent/[file] d1/
+        
+        The latter one will create new path "d1/home/inray/utorrent" in the destination path "d1",
+    so the original symbolic link file "utorrent" now is a directory, its contents are coped into
+    "d1/home/inray/utorrent/".
+

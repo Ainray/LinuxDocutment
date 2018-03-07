@@ -1,0 +1,60 @@
+hardware::
+    information extraction,
+
+        /proc/*, contains detailed information about hardware and others.
+        /proc/version, kernel information
+        /proc/cpuinfo, cpu
+        /proc/meminfo, memory
+
+        sudo hdparm -i /dev/sda, sata devices
+
+        sudo dmidecode -t processor/memory/bios..., using SMBIOS
+
+        free
+
+        mount
+
+        df -Th
+
+        lsblk/lsusb/lsscsi/lspci -nn/lscpu/lshw -short/hwinfo
+
+inhibit power key::
+        man logind.conf
+        sudo vim /etc/systemd/logind.conf
+        changed into  HandleLidSwitch=ignore
+                      HandlePowerKey=ignore(from poweroff)
+        sudo service systemd-logind-service
+    
+log::
+    boot information,
+        sudo tail /var/log/kern.log
+    installtion/apt/software information, to copy whole installtion from one to anthoer
+        dpkg --set-selections < .ar/installed.log
+        dpkg --get-selections > .ar/installed.log
+        sudo apt-get dselect-upgrade
+    xorg log,
+        ~/.local/share/xorg/Xorg.0.log
+
+touchpad::
+    determine which type of touchpad, Synaptics, ALPS, or Elantech
+
+        egrep -i 'synap|alps|etps|elan'  /pro/bus/input/devices
+    or,
+        cat /proc/bus/input/devices |grep -i touch
+
+    Strech desktop configuration, first install synaptics tool by
+        sudo apt-get install xserver-xorg-input-synaptics
+        sudo apt-get install xserver-xorg-input-synaptics-dev
+    make synaptics with percendence over the libinput configuration
+        sudo mkdir -p /etc/X11/xorg.conf.d
+        sudo cp /usr/share/X11/xorg.conf.d/70-synaptics.conf /etc/X11/xorg.conf.d/
+    enable tapping on touchpad
+        sudo mkdir -p /etc/X11/xorg.conf.d
+        /etc/X11/xorg.conf.d/40-libinput.conf
+            Section "InputClass"
+                Identifier "libinput touchpad catchall"
+                MatchIsTouchpad "on"
+                MatchDevicePath "/dev/input/event*"
+                Driver "libinput"
+                Option "Tapping" "on"
+            EndSection

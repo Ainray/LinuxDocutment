@@ -1,0 +1,5 @@
+Problem one, connect hidden wifi or if some specific wifi cannnot connect, try
+    
+    sudo ifconfig wlan0 up
+    sudo iw wlan0 connect ainray
+    sudo ifup wlan0

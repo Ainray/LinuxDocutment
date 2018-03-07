@@ -1,0 +1,5 @@
+keystrokes::
+
+        shift e,    show current link
+        shift g,    show page link 
+        a      ,    can copy current link to /home/inray/.lynx_bookmarks.html

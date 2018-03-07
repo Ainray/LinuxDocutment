@@ -1,0 +1,100 @@
+tricks::
+    shutdown remote system on ssh:
+
+         echo "shutdown -h now" |at now
+
+    This command protect the process doing "shutdown -h now" from the termination of ssh.
+
+ssh service sshd configuration::
+        Check configuration by 
+                
+                /usr/sbin/sshd -t 
+
+        Disable root login
+
+                #PermitRootLogin prohibit-password
+                PermitRootLogin no
+            
+        Disable password authentication.
+
+               PasswordAuthentication no
+               
+        Disable forwarding
+        
+               AllowTcpForwarding no
+	       X11Forwarding no
+
+	Specify accounts
+	        
+	        AllowUsers inray
+	        DenyUsers Foo Bar
+	        
+	        sudo groupadd -r sshusers
+	        usermod -a -G sshusers inray
+	        AllowGroups sshusers #in /etc/ssh/sshd_config
+
+	Number of total simultaneous pending( not yet authorized) login connections
+
+	        MaxStartups 2:30:10
+	    # allow two pending connections, and 3rd-10th connection the system will
+	    # start randomly dropping connections from 30% up to 100% at the 10th simultaneous connection.
+	    # pending connections means unauthorized (e.g., if password authorization is allowed, when
+	    # someone request ssh connection to the server but still not enter password.)
+	    # pending connections do not include connected remote terminals.
+	        LoginGraceTime 30
+	        LoginGraceTime 2m
+	    # time to keep pending connections alive while waiting for authorization
+	    # e.g., if someone do not enter password, the connection will cancelled.
+	        
+	Log
+	        #LogLevel INFO
+	        LogLevel VERBOSE  /var/log/auth.log
+        
+        Banner to give a bad guy a chuckle
+                Banner /etc/issue.net  # only for SSH
+                Banner /etc/issue  # both for SSH users  and local console login
+
+        Restart ssh
+                sudo restart ssh
+                sudo systemctl restart ssh
+key::
+        RSA keys generation,
+
+            ssh-keygen -t rsa [ -b 4096]
+            ssh-copy-id <username>@<host>   # copy ssh key if shh login to some terminal
+            ssh-copy-id inray@192.20.16.1   # copy ssh key if shh login to some terminal
+
+        When without ssh-copy-id command installed,
+
+            ssh inray@192.20.16.1 "umask 077; test -d .ssh || mkdir .ssh"
+            cat ~/.ssh/is_rsa.pub | ssh inray@192.20.16.1 "cat >> .ssh/authorized_keys"
+
+        After delivery public key to remote server, test it by 
+
+            ssh inray@192.20.16.1
+
+        or copy a file by
+            
+            touch test.txt
+            scp test.txt inray@192.20.16.1:/tmp/
+
+        RSA key passphrase change
+            
+            ssh-keygen -p -f ~/.ssh/id_rsa
+
+scp/sftp/rsync without passphrase entering::
+    
+            eval $(ssh-agent) 
+            ssh-add
+            ssh inray@192.20.16.1
+
+local ssh configuration::
+            # .ssh/config
+
+            Host Debian
+                Hostname 192.20.16.1
+                User inray
+                Port 22
+                ServerAliveInterval 10
+            # ssh will send a keep-alive packet every 10 seconds, so then my connection
+            # is only terminated by loss of network connection.

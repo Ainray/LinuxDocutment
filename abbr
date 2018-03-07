@@ -1,0 +1,103 @@
+# Text File
+#                                                                      #
+# author:        Ainray                                                #
+#                                                                      #
+# email:         wwzhang0421@163.com                                   #
+#                                                                      #
+# file:          abbr                                                  #
+#                                                                      #
+# created:       2017-12-23 21:07:47                                   #
+#                                                                      #
+# modified:      2017-12-24 10:11:35                                   #
+#                                                                      #
+# introduction:  Abbreviations and one-sentence definitions.           #
+#                                                                      #
+# license:       Public license.                                       #
+#                                                                      #
+########################################################################
+acl; access control list;
+ansi; American National Standards Institute;
+as; autonomous systems; nothing more than a network or group of networks under common controls
+bgp; border gateway protocol; used mostly by ISP's to share information about different networks.
+bgp4; ; 
+bre; basic regular expressions;
+CA; certificate authority;
+cf; compact flash;
+cga; color graphics adapter; IBM first graphics card and first color card for IBM PC.
+cidr; classless interdomain route;
+dhcp; dynamic host configuration protocol;
+dns; domain name system;
+Dos; denial of service; Dos attacks.
+dsa; directory system agent; an ldap server, by default on tcp/udp port 389, port 636 for ldaps(ldap over ssh)
+dsl; digital subscriber line;
+EAP; extensible authentication protocol; rfc3748/2284/5247, an authentication framework
+ebgp; ; opposite ibgp, in rare case where it is used in place of interior protocols(igrp,rip, etc.) 
+ega; enhanced graphics adapter; IBM after cga
+egp; exterior gateway protocol;
+ere; extended regular expression;
+essid; extended service set identifier;
+iana; internet assigned numbers authority;
+ibgp; ; used inside an autonomous system, works much like "network neighborhood"
+ibss; independent basic service set; also known as wireless ad-hoc network
+imap; Internet message access protocol; alternative of pop3
+ldap; lightweight directory access protocol;
+MAN; metropolitan area network; 
+manet; mobile ad hoc network; also wanet, a decentralized type of network
+mda; monochrome display adapter; IBM monochrome 80*25 text mode card, also MDPA(~ ~ and Printer ~).
+mda; mail delivery agent; delivering messages to the user's mailboxes within a host
+mime; multipurpose internet mail extensions; Internet standard extending the format of email
+mmc; multimedia card; a flash memory card standard
+msa;  message submission agent;
+mss; maximum segment size; MSS=MTU-40(ipv4)/-60(ipv6)
+mtu; maximum transmission unit;
+mta; mail transfer agent; transferring mails between hosts
+mua; mail user agent; aka mail client, generate messages and access delivered messages.
+mutex; mutual exclusion;
+NAT; network address translation; 
+NIC; Network interface controller/Card;
+nis; network information service;
+nss; name service switch; a facility providing sources for common configuration databases and name resolution mechanisms.
+pcf; portable compiled format; a bitmap font format used by X Window System in its core font system.
+pop3; post office protocol 3; protocol used by MUA to read messages from mail server.
+ppa; Personal package archive;
+ppp; point-to-point protocol; a data link layer (layer 2) communications protocol used to establish a direct connection between two nodes.
+pts;;slave part of pty
+pty; pseduo terminal device;
+QoS; Quality of service; the description or measurement of the overall performance of a service
+rfc; request for comments; to propose new Internet standards
+rsa; Rivest-Shamir-Adleman; one of the first public-key cryptosystems
+rsn; robust secure network; part of 802.11i to establish secure communication over an 802.11 wireless network
+sd card; secure digital card; sdsc refer to sd standard-capacity
+sdhc; secure digital high capacity;
+sdxc; secure digital extended-capacity;
+sdio; secure digital with io;
+slaac; stateless address autoconfiguration; 
+smtp; simple mail transfer protocol; rfc 5231, 5322, 6531
+socket;; combination of IP-address and port number
+sonet; synchronous optical network; it is a standard for multiplexing data;
+ssid; service set identifier; network name of the Wireless AP
+sts; synchronous transport signal;
+sysrq; system request; also abbreviated sys req, for a key on pc keyboards that has no standard use.
+tcp; transmission control protocol;
+tls; transport layer security; EAP-TLS, rfc5216
+tos; type of service; IP header, 8 bits used to help in routing packets
+ttl; time to live; ip packet field
+tty; teletypewriter; also called a teleprinter, an electromagnetic typewriter paired with a communication channel
+tty; text terminal; teleprinter replacement, a serial computer interface for text entry and display
+tty; terminal emulator; teleprinter replacement, a program that emulates a video terminal within some other display architecture.
+udp; user data protocol;
+vcs; virtual console screen;
+vesa; video electronics stands association;
+vga; video graphics array; 640*480 resolution
+vnc; virtual network computing; used to display and access a Linux desktop from a system anywhere else on a network.
+vpn; virtual private network; extends a private network across a public network
+vps; virtual private server;
+vti; vertical tranverse isotropy;
+vt100;; a video terminal first supporting ANSI escape coeds, which becomes de facto standard for terminal emulators
+wanet; wireless ad hoc network; also manet, a decentralized type of network
+wds; wireless distribution system;
+wep; wried equivalence privacy; wep-40 or wep-104 (bits)
+wpa; wifi protected access;
+xdmcp; X display manager control protocol; 
+xfree86;; an implementation of the X Window System.
+xterm; ; standard terminal emulator for the X Window System

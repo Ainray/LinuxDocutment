@@ -1,0 +1,197 @@
+IDE in vim configuration:
+    
+        ~/.vim/after/ftplugin/python.vim for python tap and indent
+
+              set tabstop=4
+              set softtabstop=4
+              set shiftwidth=4
+              set textwidth=79
+              set expandtab
+              set autoindent
+              set fileformat=unix
+
+        better indent by
+
+            git clone git@github.com:vim-scripts/indentpython.vim
+
+        autocompletion for python by
+            cd ~/.vim/bundle/
+            git clone git@github.com:Valloric/YouCompleteMe
+            cd YouCompleteMe
+            git submodule update --init --recursive
+            ./install.py --clang-completer
+
+        color scheme for
+
+            wget https://vim.sourceforge.io/scripts/download_script.php?src_id=2538 -O python.vim
+            mv python.vim ~/.vim/after/colors/
+
+        syntax check and highlighting
+            install flake-8 for PEP8
+            
+                sudo python3 -mpip install flake8
+                git clone git@github.com:nvie/vim-flake8.git
+
+            run flake8-check, assume any of g:flake8_show_in_gutter or g:flake8_show_in_file are set to 1,
+                
+                call flake8#Flake8UnplaceMarkers()
+                
+        to remove all markers
+
+            remap key for flake8-checking instead of using default <F7> by
+            
+                autocmd FileType python map <buffer> <F3> :call Flake8()<CR>
+
+        in ~/.vimrc, or by
+
+                noremap <buffer> <F3> :call Flake8()<CR> 
+
+        in ~/.vim/after/ftplugin/python.vim, or automatically check when
+        writing by 
+
+                autocmd BufWritePost *.py call Flake8()
+
+        in ~/.vimrc
+                
+
+                
+                
+
+                
+
+        
+
+array::
+        numpy.ndarray
+    
+        t=numpy.linspace(0.001,0.06,101)
+
+comment::
+    block comment,
+        """
+            <comments>
+        """
+
+    single-line comment
+        # <comment>
+
+dict::
+    definition,
+
+            inp2=dict(src=[0,0,0.001], rec=[1000,0,0.001],
+                  depth=[0,500,525],res=[2e14,20,500,20],
+                  freqtime=t,verb=1
+            )
+        or,
+
+            inp2={'src':[0,0,0.001], 'rec': [1000,0,0.001],
+                  'depth':[0,500,525],'res':[2e14,20,500,20],
+                  'freqtime': t,'verb':1
+            }
+    
+
+    indexing,
+            
+            inp1['depth']=inp2['depth'][0]
+if::
+    syntax
+        
+            if condition:
+                <IndentedStatementBlock>
+
+            if condition:
+                <IndentedStatementBlock>
+            else:
+                <IndentedStatementBlock>
+
+            if condition:
+                <IndentedStatementBlock>
+            elif
+                <IndentedStatementBlock>
+            else:
+                <IndentedStatementBlock>
+
+            # if stuctrue can be nested
+
+lexical::
+        Comments starts with a hash (#) and ends at a EOL.
+        If a comment in the first or second line of python script matches the regular expression
+
+                                coding[=:]\s*([-\w.]+)
+
+        Lexical analyzer break a python program(file) into tokens, which are read by a parser.
+
+        A python program -> logical lines
+        
+        A logical line ends by NEWLINE token, which maybe contain multiple physical lines ending
+    with EOL(LF or CR LF or CR). Explicit line joining uses backslash "\", Expressions in parentheses,
+    square brackets or curly braces can be split over more than one physical line without using "\".
+        
+
+list::
+    definition,
+    
+        [a,b,c]
+
+    indexing,
+
+            s[i], ith item of s, origin 0
+            s[i:j], slice of s from i to j 
+            s[i:j:k], slice of s from i to j with step 2 
+        NOTE: i, j can be negative, relative to the end of s
+              for s[i:j], if i is omitted or None, use 0, if j is omitted, or None use len(s), if i>=j, empty
+              for s[i:j:k], index x=i+n*k, 0<=n<(j-i)/k, thus x=i,i+k,...,<j always.
+              
+module::
+        A module is a script including definitions of functions as well as executable statements. These
+    statements only are executed the first time the module name is encountered in an import statement.
+    They are also executed if the file executed as a script.  Each module has its own private symbol
+    table, which is used as global symbol table by all functions defined in the module.
+
+        import a module,
+
+            import foo
+            foo.bar()
+
+            from foo import bar
+            bar()
+            # in this case, the module name "foo" is not introduced
+
+            from foo import *
+            # imports all names execept those beginning with an underscore(_).
+       
+            >>> reload(foo) 
+            # a module is import only once per interpreter session, so if you change your modules,
+            # you must restart the interpreter -or, reload it.
+
+        execute a module as scripts
+
+            python foo.py <arguments>
+
+            # because the code in the module will executed, just as if you imported it, but with 
+            # __name__ is set to __main__, then by adding this code at the end of your module
+
+            if __name== "__main__"
+                import sys
+                bar(int(sys.argv[1]))
+                
+            # you can make a file usable as an importable module or as a script, because the code
+            # that parses the command line only run if the module is executed as the "main" file.
+            # If you import it as a module, it's code will not be run.
+
+        module search path
+            * interpreter first searches for a built-in module with that name, e.g. "foo", 
+            * if not found, it then searches for a file named foo.py in a list of directories
+              given by the varialbe sys.path
+              sys.path is initialized from these locations:
+                +   current directory
+                +   PYTHONPATH
+                +   the installation-dependent default
+                +   python programs can modify it after initialization
+
+        list the names of functions and variables
+            dir()
+            dir(foo)
+            dir(sys)
+            dir(__buildins__)
+

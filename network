@@ -1,0 +1,170 @@
+BGP:
+    BGP, border gatewary protocal, ditinguish itself with other protocals such as rip or igrp by the fact
+  that it is an external protocal.
+
+bluetooth::
+    restart bluetooth and status check
+        systemctl status bluetooth
+        systemctl restart bluetooth
+    scan remote bluetooth devices
+        hcitool scan
+    display local bluetooth device
+        hcitool dev
+    local bluetooth device discoverable or not,
+        dbus-send --system --dest=org.bluez /org/bluez/hci0 org.bluez.Adapter.SetMode string:discoverable
+        dbus-send --system --dest=org.bluez /org/bluez/hci0 org.bluez.Adapter.SetMode string:off
+    or,
+        hciconfig hci0 piscan
+        hciconfig hci0 noscan
+    connection by bluetoothctl,
+        bluetoothctl-> scan on -> agent on -> pair <MAC> ->connect <MAC>
+    connection by bluetooth-agent(in package bluez)
+        bluetooth-agent 4834<Just any PIN>
+        rfcomm connect hci0 <phone address>
+
+Debian::
+    legacy configuration, old net-tools (ifconfig(8), ...),  Linux NET-3 networking system, most are 
+  obsolete now.
+    New Linux iproute2 programs(ip(8),...)
+    DO NOT USE LOW LEVEL CONFIGURATION TOOLS SUCH AS IFCONFIG(8) AND IP(8) COMMANDS TO CONFIGURE AN INTERFACE IN UP STATE.
+    ifupdown is de facto standard for high level network configuration system on Debian, which is  supplied
+  by resolvconf to smooth reconfiguration of network address resolution by automating rewrite of 
+  resolver configuration file /etc/resolv.conf
+    Network connection configurations,
+    --------------------------------------------------------------------------------------------------------------
+    connection method       configuration                           backend packages        PC            
+    --------------------------------------------------------------------------------------------------------------
+    PPP                     pppconfig to create deterministic chat  pppconfig,ppp           serial port(ppp0)
+    PPP(alternative)        wvdialconf to create heuristic chat     ppp, wvdial             serial port
+    PPPoE                   pppoeconf to create deterministic chat  pppoeconf,ppp           ethernet port(eth0)
+    DHCP                    /etc/dhcp/dhcpclient.conf               isc-dhcp-client         ethernet port(eth0)
+    static IP (IPv4)        /etc/network/interfaces                 iproute or net-tools    ethernet port(eth0)
+    static IP (IPv6)        /etc/network/interfaces                 iproute                 ethernet port(ppp0) 
+    -------------------------------------------------------------------------------------------------------------- 
+
+dsl:
+    Digital subscriber line, was originally to deliver video over existing copper lines. The copper lines
+that run from the phone company to residential or commercial areas are sometimes called "local loops".
+
+Encapsulation::
+    As data moves along a network, various attributes are added to the file to create a frame. This process
+is called encapsulation. Encapsulation methods depend on protocol, so does the frame structure.
+
+ftp::
+        phone ftp share with Debian, transfer files with cellphone, install "ES" on cellphone, 
+    open ftp sever, then ftp transformation is supported.
+
+Hubs::
+        Hub devices are sometimes referred to as repeaters. It sees information is the form of bits and works
+    by broadcasting network traffic across all ports. Hubs incur an increased amount of collisions (two devices
+    trying to broadcast simutaneously).
+
+ifupdown::
+    Debian high-level network configuration(legacy) tool.
+    /run/network/ifstate stores intended network configuration states for all current active network 
+  interfaces managed by ifupdown package.
+    ifupdown-extra tests network connection and record results in /var/log/syslog
+
+iproute2::
+    from obsolete net-tools to new iproute2 translation table
+    ----------------------------------------------------------
+    obsolete net-tools  new iproute2    manipulation
+    ----------------------------------------------------------
+    ifconfig            ip addr         protocol address
+    route               ip route        routing table
+    arp                 ip neigh        arp ndisc cahce
+    ipmaddr             ip maddr        mutlicast address
+    iptunnel            ip tunnel       tunnel over IP
+    mameif              ifrename        name netowkr interfaces based on MAC
+    mii-tool            ethtool         Ethernet device settings
+    ----------------------------------------------------------
+
+LAN::
+    ip for LANs by rfc1918, 
+    ----------------------------------------------------------------------------------------
+    classes network addresses           net mask        net mask /bits  # of subnets
+    ---------------------------------------------------------------------------------------- 
+    A       10.x.x.x                    255.0.0.0       /8              1
+    B       172.16.x.x--172.31.x.x      255.255.0.0     /16             16
+    C       192.168.0.x--192.168.255.x  255.255.255.0   /24             256
+    ---------------------------------------------------------------------------------------- 
+    NOTE: if one of these addresses is assigned to a host, then that host must not access the Internet
+    directly but must access it through a gateway that acts as a proxy for individual services or else
+    does NAT. The broadband router usually performs NAT for the consumer LAN environment.
+
+MTU::
+    find optimal MTU by
+        ping -c 1 -s $((1500-28)) -M do www.debian.org
+    where 28 bytes of ICMP+IP header.
+
+Ports::
+    For data access over the same IP address. Two main types of ports: TCP and UDP (up to 65,535). 
+Ports 0-1023 are reserved.
+
+remote desktop::
+    connect remote desktop to Windows, first setup Windows by
+        Win+R-> run "systempropertiesremote" check remote desktop
+        Win+R-> run "firewall.cpl" add "remote desktop" into enabled list
+
+    Linux connection by
+        rdesktop -u Inray 192.20.16.39 -f 
+        Ctrl+Alt+<Enter> to exit from full display
+
+Routers::
+    Routers make intelligent decision how to route traffic. They can work with or act as firewalls.
+
+Session::
+    It is a possible for multiple devices to connect to a single port. Once a connect is established
+it is know as a "session".
+
+Switches:
+    It works similarly with hubs, except they only send data to intended ports instead of broadcasting.
+
+TCP:
+    It offers error correction, so it is a guaranteed delivery, which is due largely to a method called
+"flow control". Flow control determines when data needs to be resent, and stops the flow fo data until 
+previous packets are sucessfully transferred. If a packet is sent, a collision may occur when the client
+re-request the packet from the server until the whole packet is complete and is identical to its original.
+
+telnet:
+    The telnet gives users the ability to access a host and perform tasks as if they were working locally.
+It uses port 23. Now most servers are using SSH due to security.
+
+token ring::
+    IEEE 802.5
+
+topology::
+
+    Server-based networks is an efficient way to offer other services to clients such as firewall protection,
+DHCP, etc. It characterises easily managed security policy, easy file backup because of centrally located. 
+Peer-to-peer networks maybe commonly suffer to bottle necking and network saturation, which can be helped with
+the use of software offering bandwidth throttling.
+
+UDP:
+    It is commonly used for streaming meida such as audio and video.
+
+Virtual network interface::
+    An example,
+        iface eth0 inet dhcp
+        metric 0
+        iface eth0:0 inet static
+        address 192.168.0.1
+        netmask 255.255.255.0
+        network 192.168.0.0
+        metric 1
+    An single Ethernet interface on your host is connected to a Ethernet hub
+  (or a network switcher), which is connected to both the Internet and LAN network
+  The LAN network uses subnet 192.168.0.x/24, your host uses DHCP served IP address
+  with physical interface eth0 for the Internet, and uses 192.168.0.1 with virtual
+  interface eth0:0 for the LAN. 
+    Note, this example with NAT using iptables can provide cheap router of LAN with
+  only single interface, there is no real firewall capbility with such setup.
+
+WEP::
+    wireless-tools is needed.
+    refer to /usr/share/doc/wireless-tools/README.Debian
+
+wlan::
+wifi::
+    connet hidden wifi, first set essid by iwconfig, then ifup the wlan interface.
+        sudo iwconfig wlp60s0 essid xm123

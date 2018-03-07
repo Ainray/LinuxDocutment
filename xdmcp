@@ -1,0 +1,24 @@
+Debian lightdm configuration::
+
+   /etc/ligthdm/lightdm.conf 
+        [XDMCPServer]
+        enabled=true
+        port=177
+        [LightDM]
+        start-default-seat=false
+
+    check configuration
+
+        /usr/sbin/lightdm --show-config
+
+    restart ligthdm service
+        
+        sudo service lightdm restart
+    
+ssh configuration::
+        
+        # /etc/ssh/sshd_config enable X11 forwarding
+            X11Forwarding yes
+
+Windows 10 connection::
+        use Xbrower to connect Debian

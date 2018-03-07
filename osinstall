@@ -1,0 +1,36 @@
+install efi boot::
+
+        sudo mount /dev/sda12 /boot/
+        sudo mount /dev/sda4 /var
+        mount /dev/sda12 /boot
+        fsck.ext4 /dev/sda12
+        efibootmgr --verbose
+        grub-install --boot-directory=/boot /dev/sda
+        update-grub
+        shutdown -h now
+        [ -d /sys/firmware/efi ] && echo "EFI boot on HDD" || echo "Legacy boot on HDD"
+        fdisk -l
+        mount dev/sda1 /boot/efi/
+        apt-get install --reinstall grub-efi
+        mount proc /proc -t proc
+        mount devpts /dev/pts -t devpts
+        apt-get install --reinstall grub-efi
+        grub-install /dev/sda
+        update-grub
+        grub-install /dev/nvme0n1
+        update-grub
+        reboot
+        file /boot/efi/EFI/debian/grubx64.efi 
+        efibootmgr --verbose |grep debian
+
+boot into desktop or not ::
+
+    get default login via console(multi-user.target) or graphics(graphical.target) by
+
+        systemctl get-default
+
+    set default login by
+
+        sudo systemctl set-default multi-user.target
+
+

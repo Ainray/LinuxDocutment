@@ -1,0 +1,36 @@
+install::
+
+        install in Debian
+            cd ~/.vim/bundle/
+            git clone git@github.com:Valloric/YouCompleteMe
+            cd YouCompleteMe
+            git submodule update --init --recursive
+
+supported laguages::
+        C-family
+        C#
+        python
+        Go
+        TypeScript
+        JavaScript
+        Rust
+
+Guide::
+        Ctrl+Space, trigger the completion suggestions anywhere, useful to see
+    which top-level functions are available for use.
+
+        python semantic completion,
+            let g:ycm_python_binary_path='/usr/bin/python3'
+
+        ycm server restart
+
+            :YcmRestartServer
+
+        recompile file 
+
+            :YcmForceCompileAndDiagnostics
+
+        or map it in ~/.vimrc
+
+            nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+

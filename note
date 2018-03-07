@@ -1,0 +1,60 @@
+########################################################################
+#                                                                      #
+# author:        Ainray                                                #
+#                                                                      #
+# email:         wwzhang0421@163.com                                   #
+#                                                                      #
+# file:          note                                                  #
+#                                                                      #
+# created:       2017-12-23 16:50:08                                   #
+#                                                                      #
+# modified:      2017-12-24 20:03:12                                   #
+#                                                                      #
+# introduction:  All notes about something.                            #
+#                                                                      #
+# license:       Public license.                                       #
+#                                                                      #
+########################################################################
+Linux console:
+    A system console internal to Linux kernel, provides a way for kernel and other process to send text output
+to ther user, and to receiver text input from the user.
+    It has two main implementations: framebuffer and text mode.
+    In Linux, several devices can be used as system console: virtual terminal, serial port, USB serial prot,
+VGA text-mode, framebuffer. Virtual consoles(Alt+F1,Alt+F2,...) are supported at the Linux kernel level.
+
+fbterm:
+    install
+        sudo apt-get install fbterm
+        sudo apt-get install fcitx-frontend-fbterm
+    configuration
+        sudo chown root:utmp /usr/bin/fbterm
+        sudo chmod 6755 /usr/bin/fbterm
+    ~/.fbtermrc
+        font-size=32
+        input-method=fcitx-fbterm
+        # theset two line can be added in /etc/profile for persistent work
+        # following setup do not work
+        setcap 'cap_sys_tty_config+ep' /usr/bin/fbterm  #get key-squence
+        gpasswd -a inray video
+font:
+    list fonts
+        fc-list
+
+7z:
+    sudo apt-get instal p7zip
+    7zr x crack.7z
+usb:
+    format
+        sudo fdisk -l
+        sudo mkfs.ntfs -f /dev/sdb1
+    mount as non-root user,this can also be applied into network cifs disk
+        /dev/sdb1 /mnt/usb auto rw,uid=1000,gid=1000,umask=0022,noauto 0 2
+        //192.20.16.39/e  /mnt/win/ cifs  username=Inray,rw,uid=1000,gid=1000,noauto 0 0
+    filesystem and size
+        df -Th
+    label(ntfslabel from ntfs-3g)
+        sudo ntfslabel /dev/sdb1
+        sudo ntfslabel /dev/sdb1 Debian
+cli:
+    booted into cli directly when Linux is started
+        sudo systemctl set-default mutli-user.target

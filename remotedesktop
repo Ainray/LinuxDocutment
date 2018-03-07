@@ -1,0 +1,6 @@
+    In Debian, first install xrdp by
+        sudo apt-get install xrdp
+
+    In Windows 10, run 
+        mstsc
+    to open remote desktop

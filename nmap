@@ -1,0 +1,4 @@
+states::
+    filterd, No SYN ACK return from server, server block access to corresponding ports (firewall)
+    closed,  no service running on the port but no firewall block it as well
+             in one case, server return RST ACK response (reject instead of directly drop SYN request)

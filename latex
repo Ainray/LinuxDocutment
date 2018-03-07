@@ -1,0 +1,70 @@
+characters:
+    [0-9]
+    [a-z]
+    [A-Z]
+    . : ; , ? ! ` ' ( ) [ ] - / * @
+special characters:
+    # $ % & ~ _ ^ \ { }
+mathematical characters:
+    + = | < >
+latex text-generating commands and correspdong declaration:
+    -------------------------------------------------------
+            cmd                      declaration
+    -------------------------------------------------------
+          \textup                      \upshape
+          \textit                      \itshape
+          \textsl                      \slshape
+          \textsc                      \scshape
+          \textmd                      \mdseries
+          \textbf                      \bfseries
+          \textrm                      \rmfamily
+          \textsf                      \sffamily
+          \texttt                      \ttfamily
+    -------------------------------------------------------
+    NOTE: shape, upright/italic/slanted/smallcaps
+          series, medium/boldface
+          family, Roman/Sans serif/Typewriter
+    Synatx:
+        \textup{ text } 
+        {\upshape text} 
+how to change a command:
+    preloaded commands,
+        refer to /usr/share/texlive/texmf-dist/tex/latex/base/source2e.tex 
+    \chapter command using report document class,
+       /usr/share/texlive/texmf-dist/tex/latex/base/report.cls   
+          \newcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    \thispagestyle{plain}%
+                    \global\@topnum\z@
+                    \@afterindentfalse
+                    \secdef\@chapter\@schapter}
+                    ...
+     generating file based existed dtx file,
+
+user style file installation:
+    mkdir -p /home/inray/texmf/tex/latex/elsarticle
+    mv elsarticle.cls /home/inray/texmf/tex/latex/elsarticle
+    texhash ~/texmf
+
+vim:
+    latex-suite ~/.vimrc settings,
+        set shellslash [for windows]
+        set grepprg=grep\ -nH\ $*
+        let g:tex_flavor='latex'
+    latex-suite ~/.vim/ftplug/tex.vim settings,
+        set sw=2
+        set iskeyword+=:
+        colorscheme navajo-night 
+    latex-suite ~/.vim/after/ftplugin/tex_macros.vim to over-ride marcro definitions,
+        call IMAP('`w','\omega','tex')
+        let g:Imap_FreezeImap=1 or b:Imap_FreezeImap=1 to suspend IMAP functionality
+    latex-suite usage,
+        TTemplate, use a template
+        EFI->Ctrl+J (for EPS figure)
+        F5
+        EFL, flushleft
+        EFR, flushright
+        EEQ, equation
+        EQE, quote
+        EQN, quotation
+
+

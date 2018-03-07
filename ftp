@@ -1,0 +1,69 @@
+RFC::
+    RFC 959
+    RFC 1123
+
+Requests::
+greeting::
+    An ftp conversation consists of requests sent by the client and responses sent by the server.
+  After the client connects, the server sends a response to the client, either accepting or rejecting
+  the condition. This initial response is called the greeting.
+    If the server accepts the connection, the client sends zero or more requests to the server. 
+    Each request is handled as follows:
+        1. The client sends the request to the server
+marks::
+        2. The server sends one or more responses to the client. The last response either accepts or rejects
+           the request. Previous responses are marks.
+verb::
+parameter::
+    A request is a string of bytes. It contains
+        1. A verb consists of alphabetic ASCII characters;
+        2. Optionally, a space followed by a parameter, and 
+        3. \015\012( some clients failed to include \015, where server should look only for \012)
+        NOTE: \012 LF, \015 CR, Windows use CRLF as newline, Linux use LF only as newline.
+code::
+acceptance::
+rejection::
+    The server's response consists of one or more lines. Each line is terminated by \012.
+  The client can identify the last line of the response as follows: it begins with three ASCII digits
+  and a space; previous lines do not. The three digits from a code. Codes between 100 and 199 indicate
+  marks; codes between 200 and 399 indicate acceptance; codes between 400 and 599 indicate rejection.
+  
+  some code meaning
+    ----------------------------------------------------------------------------------------------------
+    code        meaning
+    ----------------------------------------------------------------------------------------------------
+    100~199     marks
+    200~399     acceptance
+    400~599     rejection
+    220         greetings
+    421         server is about to close the connection
+    500         violate some internal parsing rule in the server
+    501         server does not like the format of the parameter
+    502         server recognize the verb but not support it
+    504         server support the verb but does not support the parameter
+    530         permission is denied
+    ----------------------------------------------------------------------------------------------------
+files::
+    ftp supports regular files, including text and binary files, and directories.
+
+ports::
+    21
+    20
+
+cellphone::
+    access phone by,
+        ftp 192.39.12.101 2121
+        lynx ftp://192.168.0.34:3721/
+
+synchronization::
+    first mount ftp as local file system
+
+        curlftpfs 192.39.12.101:2121 /mnt/usb
+
+    umount as usually by,
+
+        sudo umount /mnt/usb
+
+    synchronization by rsync,
+
+        rsync -av info=progress2 /mnt/usb/DCIM/Camera/ .

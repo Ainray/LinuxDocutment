@@ -1,0 +1,3 @@
+convert coding::
+   iconv -f GBK -t UTF-8 Ainray.txt > Ainray.txt.linux 
+

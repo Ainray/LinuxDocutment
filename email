@@ -1,0 +1,13 @@
+email::
+    MTA, mail transport agent, transferring mails between hosts
+    MDA, mail delivery agent, delivering messages to the users' mailboxes within a host
+    MUA, mail user agent, aka as email client, generate messages and to access delivered messages
+    
+    An email message consists of three components, the message envelope, the message header,
+  and the message body.
+    "To" and "From" information in the message envelope is used by the SMTP to deliver the email.
+  The "From" information is also called bounce address, From_, etc.)
+  The "To" and "From" information in the message header is displayed by the email client. 
+  The MUA needs to interpret the message header and body data using MIME to deal the content data
+  type and encoding.
+

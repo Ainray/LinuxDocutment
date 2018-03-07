@@ -1,0 +1,10 @@
+# reference:
+    [1] https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+    [2] https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers#Well-known_ports
+port        protocal                service
+22          tcp                     ssh
+80          tcp                     http
+177         udp                     xdmcp
+443         tcp                     https
+465         tcp                     smtps
+587         tcp                     msa 

@@ -1,0 +1,64 @@
+file permission::
+    man umask
+    man acl
+    man chmod
+    man chown
+    man chgrp
+
+basic permission control::
+    
+        . For directory, no "x", you can not cd it, ls only list name and print error
+                                             rm file from it
+                                             create file or subdir in it
+                                             move file into it
+
+        .                no "r", you cannot get information, 
+                                 even you cannot ls it (need r and x)
+                                 but you can cd it,(x)
+                                             cp file into it (w)
+                                             mv file into it (w)
+                                             rm file from it (w)
+
+    the first character of "ls -l" output
+        ----------------------------------
+        character   meaning
+        ----------------------------------
+        -           normal file    
+        d           directory
+        l           symlink
+        c           character device node
+        b           block device node
+        p           named pipe
+        s           socket
+        ----------------------------------
+    special permission bits except "rwx",
+        --------------------------------------------------------------------
+        permission bit                          meaning
+        --------------------------------------------------------------------
+        s or S instead of user's x,             set user id
+        s or S instead of group's x             set group id
+        t or T instead of other's x             sticky bit 
+        --------------------------------------------------------------------
+    set user id on an executable file allows a user to execute the executable file with the owner id of the file
+    set group id on an executable file allows a user to execute the executable file with the group id of the file
+    set sticky bit on a directory prevents a file in the directory from being removed by user who is not the 
+  owner of the file, useful for public directory.
+    numeric mode for permission
+    -------------------------------------------------------------
+    bit     value and  meaning
+    -------------------------------------------------------------
+    1       (optional) sum of setuid(=4) setgid(=2) sticky bit(=1)
+    2       sum of read(=4),write(=2),executable(=1) for user
+    3       for group
+    4       for other
+    ------------------------------------------------------------
+    umask, for new created files
+        (file permissions)=(requested file permissions) & ~(umask value)
+    requested file permissions is usually 0666, and umask is usually 0022, then the result 
+  permissions is 0644. umask means masking corresponding permission, e.g. write here.
+
+file information::
+
+    file size  is get by
+
+        du -sh[L] Prj/*  # L dereference all symbolic links

@@ -1,0 +1,47 @@
+Text processing tools' support of regular expression::
+    -----------------------------------------------------------------------------------
+    BRE                         ERE                         no RE is used
+    -----------------------------------------------------------------------------------
+    grepa                       egrep                       cat
+    ed                          awk                         tac
+    sed                         tcl                         cut
+    vim                         perl                        head
+    emacs                       pcregrep                    tail
+                                re module in python         sort
+                                                            uniq
+                                                            tr
+                                                            diff
+    -----------------------------------------------------------------------------------
+
+Metacharaters for BRE and ERE::
+    ------------------------------------------------------------------------------------
+    BRE                     ERE             description
+    ------------------------------------------------------------------------------------
+    \ . [ ] ^ $ *           \ . [ ] ^ $ *   common metacharacter
+    \+ \? \( \) \{ \} \|                    BRE only "\" escaped metacharacters
+                            + ? ( ) { } |   ERE only non-"\" escaped metacharacters
+    c                       c               match non-metacharacter "c"
+    \c                      \c              match literial "c"
+    .                       .               match any character include newline
+    ^                       ^               position at the begining of a string
+    $                       $               position at the end of a string
+    \<                      \<              position at the begining of a word
+    \>                      \>              position at the end of a word
+    [abc...]                [abc...]        match any character in "abc..."
+    [^abc...]               [^abc...]       match any character execpt in "abc..."
+    r*                      r*              match zero or more RE identified by "r"
+    r\+                     r\+             match one or more RE identified by "r"
+    r\?                     r\?             match zero or one RE identified by "r"
+    r1\|r2                  r1\|r2          match one of RE identified by "r1" or "r2"
+    \(r1\|r2\)              (r1|r2)         match one of RE identified by "r1" or "r2"
+                                            and treat it as breakcted RE
+    ------------------------------------------------------------------------------------
+
+replacement expressions:
+    ----------------------------------------------------------------------------------------------
+    replacement expression      description of the text to replace the replacement expression
+    ----------------------------------------------------------------------------------------------
+    &                           what the regular expression matched (\& in emacs, $& in perl)
+    \n                          what the n-th brackted regular expression matched ($n in perl)
+                                including "\( \)" or "( )" expression
+    ----------------------------------------------------------------------------------------------
