@@ -1,0 +1,28 @@
+Prompt::
+            (Pdb) 
+
+Start::
+        invoked as a script
+
+            $ python3 -m pdb ex_inspiralgw.py
+            (Pdb) 
+
+        Break into the debugger from a running program,
+
+            import pdb; pdb.set_trace()
+
+    then you can continue running without the debugger using
+
+            (Pdb) continue (or c)
+
+    or step through by 
+        
+            (Pdb) s
+
+        Run a program under control of the dedugger is by
+
+            >>> import pdb
+
+        Help is run by
+            (Pdb) h
+

@@ -1,0 +1,158 @@
+sudo mount -t cifs  -o username=Inray,rw,uid=1000,gid=1000 //192.168.1.2/d wdd
+sed -n "1,/^\$/{/^\$/d;p}" 1.txt|awk '{printf "%20.16f  %20.16f\n", , }'>2.txt
+git clone git://github.com/jgaeddert/liquid-dsp.git
+git clone https://github.com/kfrlib/kfr.git
+sed -n -e '/^\s*\(subroutine\)/p' *.f90 |sed 's/^\s*/!        /'
+wget -k -r -l 1 `w3sed fortran cll|cut -d' ' -f1`
+ls -d ../liquid-dsp/*/ |sed 's/.*dsp\///'|xargs mkdir
+sed -n '5,35p' ../../../41-famous/liquid-dsp-dup/examples/msequence_example.txt|awk '{print }' |xargs|sed 's/[[:blank:]]//g'
+read -a x < <(seq 0 \$(float_evals 1/30) 1 |xargs)
+reptyr
+exec 9> bash_debug.txt
+BASH_XTRACEFD="9"
+PS4="\${LINENO}: "
+sed -n -e '/^\s*\(\(function\)\|\(subroutine\)\)/p' ../src/ncutil.f90
+ssh -l ainray 172.22.11.251
+~<Ctrl><Z>
+date 111611292017.39  
+date +%Y%m%d -s "20171116"
+date -s "11/16/2017 11:29:39"
+date -s "16 NOV 2017 11:29:39"
+date set="16 NOV 2017 11:29:39"
+date +%T -s "11:29:39"
+date +%T%p -s "1:29:39PM"
+date -R
+sudo hwclock --systohc
+ssh -l ainray 172.22.11.251
+~^z
+ssh -v -l ainray 172.22.11.251
+systemd-analyze blame
+cat *.txt|sort|uniq>3.txt
+awk 'ORS=NR%5?" ":"\n"' 3.txt
+awk '{for (i=1;i<=NF;++i) printf("%s\n", )}' 4.txt
+tar zxvf 20171016.bak.tar.gz 20171016.bak/home/inray/.root/.bash_settings
+tar ztvf 20171016.bak.tar.gz |grep .bash_setting
+dpkg --get-selections > .ar/installed.log
+dpkg --set-selections < .ar/installed.log
+sudo apt-get dselect-upgrade
+awk '~/^install\$/{print ;}' /var/log/dpkg.log
+find . -type f -mtime -2 -size +100M -exec ls -l {} \;
+find Prj/11-flib/test/ -type f |xargs tar -cvf /tmp/`date '+%d%m%Y'_archive.tar`
+tr a-z A-Z < test_fb.f90
+find ~ -name '*.logaaa' -print0 |xargs -0 rm -f
+sort -t: -u -n -r -k3 /etc/passwd
+sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n /etc/hosts
+ls -al|sort +4n
+ls -al|sort +4nr
+ls -al|sort -t   -k 6n
+cut -c 1-8 list
+cut -d, -f1,3 list
+free -h |tr -s ' '
+stat -f .
+w3sed \$* |cut -d' ' -f1|xargs httrack -O d111
+find . -maxdepth 1 -type f -cmin -5
+sudo python -mpip uninstall ssd
+sed -n '/^ *\(interface\|function\|subroutine\)/p' ncutil.f90| awk '{print \$2}'|sort|awk 'BEGIN {last="xxxx"} \$1 ~ last{print "\t"\$1} \$1 \!~ last{last=\$1;print \$1}' > ncutil_fun.list
+rsync -vaR --info=progress2 line2/ line3/ ainray@172.22.11.251:/export/data3/mtemdata/20171026-LZ-MTEM
+unlink
+ln -s /export/data3/mtemdata/20171026-LZ-MTEM 20171026-LZ-MTEM
+float_evaldv {0..100}/100. >> x1.txt
+float_evaldv \({0..100}/100.\)^2 >>x3.txt
+paste x1.txt x2.txt x3.txt >> x123.txt
+float_evaldv {100..0}/100-1 >> x2.txt
+wget gnuplot.cvs.sourceforge.net/viewvc/gnuplot/gnuplot/demo/battery.dat
+awk -F, -e '{print $1,$2,(($3/255)-int($3/255))*255,(($4/255)-int($4/255))*255,(($5/255)-int($5/255))*255}' HYP_50M_SR_350px.txt
+IFS=$' \t\n'
+echo "$IFS"|cat -et
+sudo netselect-apt -n
+fc-list
+7zr x crack.7z
+sudo ip addr flush dev enx000ec6fb151b
+df -Th
+sudo mkfs.ntfs -f /dev/sdb1
+sudo ntfslabel /dev/sdb1 Debian
+opts=$(getopt -o :vhns: --long verbose,dry-run,help,stack-size: -n "parse-options" -- "$@")
+rename 's/cpp/c/' *.cpp
+convert Yonis.tif -monochrome Yonis_mono.tif
+convert Yonis.tif -colorspace GRAY Yonis_grayscale.tif
+sudo iwconfig wlp60s0 essid xm123
+texhash ~/texmf
+xrandr --output eDP-1 --brightness 0.5
+echo -n 100|sudo tee /sys/class/backlight/intel_backlight/brightness
+stty size
+systemctl status bluetooth
+sudo sysctl fs.file-nr
+git clone git@github.com:fcitx/fcitx-fbterm.git
+ip a |grep ether|sed -n '1,2p'|sed 's/^\s*//'|cut -d' ' -f2
+ssh -Y ainray@172.22.11.251
+iconv -f GB2312 -t utf8 artoflinuxkernel.log |less
+zip -r War3-1.27-Installer-enUS.zip War3-1.27-Installer-enUS
+sudo apt-get -f install
+sudo adduser inray wpa
+sudo iw list
+sudo iw dev wlp60s0 scan
+sudo iw dev wlp60s0 link
+sudo iw dev wlp60s0 station dump
+sudo mount -t vfat /dev/mmcblk0p1 /mnt/usb
+ping -c 1 -s 1453 -M do www.debian.org
+sudo ip link delete enp59s0.2
+sudo iw list |grep -i supported interface modes -A 9
+sudo iw list |grep -i valid interface combination -A 6
+sudo iw dev wlp60s0_ap del
+sudo iw dev wlp60s0 interface add wlp60s0_ap type managed addr 12:34:56:78:ab:cd
+sudo ip link set up dev wlp60s0
+sudo iptables -A INPUT -s 192.168.1.3 -j ACCEPT
+sudo iptables -A INPUT -s 192.168.1.3 -j DROP
+sudo iptables -A INPUT -m iprange --src-range 192.168.1.100-192.168.1.200 -j DROP
+sudo iptables -L -v --line-numbers
+sudo iptables -D INPUT 3
+echo -e "${x//,/\\ndns-nameservers }"
+git init 
+git add ./*
+git commit -m "First commit"
+git remote add origin git@github.com:Ainray/natap.git
+git push -u origin master
+sudo iw dev wlp60s0 station dump
+ps -C bash
+ps -C bash -l
+ps -p 10458 -l
+rsync -av --info=progress2 /mnt/wing/Prj/03-refs/ 03-refs
+rsync -av --info=progress2 --delete 03-refs/ /mnt/wing/Prj/03-refs/
+du -sh .
+tar xzvf MARE2DEM.tar.gz MARE2DEM/Source/Makefile
+tar zcvf 20180125_ap-0-0.tar.gz 20180125_ap
+nmap debian
+nmap 159.226.119.129
+zgrep 'apt-get install' /var/log/apt/history.log* |less
+sudo dpkg --add-architecture i386
+sudo update-alternatives --config x-www-browser
+ps axu|sort -rk 3 |less
+jupyter-nbconvert --to python 5a_CSEM.ipynb
+latex type1cm.ins
+wget https://vim.sourceforge.io/scripts/download_script.php?src_id=2538 -O python.vim
+git submodule update --init --recursive
+git clone --depth=1 git@github.com:vim-syntastic/syntastic.git
+rename 's/^/manual_/' *
+realpath -sz fftspec.gp
+basename  -zs ".gp" *
+sudo vconfig add wlp60s0 700
+sudo vconfig rem wlp60s0.700
+sudo iw dev wlp60s0 interface add wlp60s0_sta type managed addr 12:34:56:78:ab:cd
+sudo iw dev wlp60s0_sta scan
+sudo iw wlp60s0 info
+sudo ip link set wlp60s0 up
+sudo wpa_supplicant -i wlp60s0 -c wpa_fupy.conf
+sudo iw phy phy0 interface add wlp60s0_ap type __ap
+ftp 192.39.12.101 2121
+lynx ftp://192.168.0.34:3721/
+wget -k -r -c ftp://192.39.12.101:2121/DCIM/Camera/
+curlftpfs 192.39.12.101:2121 /mnt/usb
+rsync -av info=progress2 /mnt/usb/DCIM/Camera/ .
+split -b 500000000 --additional-suffix=.mp4 VID_20180221_111533.mp4 VID_20180221_111533
+split -b 500M --additional-suffix=.mp4 VID_20180221_111533.mp4 VID_20180221_111533
+ffmpeg -i VID_20180221_111533.mp4 -acodec copy -vcodec copy -ss 00:03:10 -t 00:05:00 VID_20180221_111533-2.mp4
+mencoder -oac pcm -ovc copy  -idx -o VID_20180221_Marriage.mp4 VID_20180221_110311.mp4 VID_20180221_111533-2.mp4 VID_20180221_111919.mp4 VID_20180221_112* VID_20180221_113*
+printf "file '%s'\n" $(ls VID_20180221_110311.mp4 VID_20180221_111533-2.mp4 VID_20180221_111919.mp4 VID_20180221_112* VID_20180221_113*)
+ffmpeg -f concat -i 1.txt -c copy VID_20180221_Marriage.mp4
+nmap debian -p 177
+sudo iw wlp60s0 connect ainray

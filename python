@@ -1,3 +1,14 @@
+Invoking::
+            invocation of a script by,
+                
+                python3 myscript.py
+
+            #(shebang) line as the first program 
+
+                #!/usr/bin/env python3
+        or
+                #!/usr/bin/python3
+
 IDE in vim configuration:
     
         ~/.vim/after/ftplugin/python.vim for python tap and indent
@@ -66,6 +77,12 @@ array::
     
         t=numpy.linspace(0.001,0.06,101)
 
+string::
+            Define multiple-line string by,
+                error = """
+            Hello, world.
+            Just a test.
+            """
 comment::
     block comment,
         """
@@ -114,10 +131,12 @@ if::
             # if stuctrue can be nested
 
 lexical::
-        Comments starts with a hash (#) and ends at a EOL.
+            Comments starts with a hash (#) and ends at a EOL.
         If a comment in the first or second line of python script matches the regular expression
 
                                 coding[=:]\s*([-\w.]+)
+        For example,
+                        # -*- coding: utf-8 -*-
 
         Lexical analyzer break a python program(file) into tokens, which are read by a parser.
 
@@ -132,6 +151,7 @@ list::
     definition,
     
         [a,b,c]
+        list(range(500,2000,100))
 
     indexing,
 
@@ -194,4 +214,133 @@ module::
             dir(foo)
             dir(sys)
             dir(__buildins__)
+
+environment variables::
+            get environment variables
+                os.environ.get('HOME')
+
+        
+scopes::
+            # ~/.bash/python_test_scope
+            # -------------------------------------------------
+                #!/usr/bin/env python3
+                def scope_test():
+                        def do_local():
+                            spam = "local spam"
+
+                        def do_nonlocal():
+                            nonlocal spam
+                            spam = "nonlocal spam"
+
+                        def do_global():
+                            global spam
+                            spam = "global spam"
+
+                        spam = "test spam"
+                        print("Initialization to:", spam)
+                        do_local()
+                        print("After local assignment:", spam)
+                        do_nonlocal()
+                        print("After nonlocal assignment:", spam)
+                        do_global()
+                        print("After global assignment:", spam)
+
+                scope_test()
+                print("In global scope:", spam)
+            # -------------------------------------------------
+class::
+            Definition by
+                class <ClassName>:
+                    <Statement-1>
+                    .
+                    .
+                    .
+                    <Statement-2>
+            Example,
+                class MyClass:
+                    """A simple example class"""
+                    i=12345
+
+                    def f(self)
+                        return 'hello world'
+
+        Then, valid attribute references are
+            
+                MyClass.i
+                MyClass.f
+                MyClass.__doc__
+
+            Instantiation by
+
+                x = MyClass()
+
+            Initialization method by,
+                
+                    det __init__(self)
+                    self.i=1325
+
+            Instance objects can be classified into data objects and method
+        objects (which corresponds to function objects of class. ) Method 
+        object can be stored away and called a later time, for example,
+                    xf=x.f
+                    while True:
+                        print(xf())
+
+            Self argument, call of x.f() is exactly equivalent to MyClass.f(x).
+        That is, when method object is called, the instance object is passed as
+        the first argument of the class function implicitly.
+
+
+            Class and instance variables
+                class Dog:
+                    kind = 'canine'         # class variable shared by all instances
+
+                    def __init__(self, name):
+                        self.name = name    # instance variable unique to each instance
+
+                >>> d = Dog('Fido')
+                >>> e = Dog('Buddy')
+                >>> d.kind
+                'canine'
+                >>> e.kind
+                'canine'
+                >>> d.name
+                'Fido'
+                >>> e.name
+                'Buddy'
+
+
+            Data attributes will override method attributes with the same names. To avoid
+        accidental name conflicts, conventionally, capitalizing Method names, prefixing
+        data attribute names with a small string(perhaps an underscore), or using verbs 
+        for methods and nouns for data attributes.
+
+            Function object can defined outside class definition block, for example,
+                def f1(self, x, y)
+                    return min(x, x+y)
+
+                class C:
+                    f = f1
+
+                    def g(self)
+                        return 'hello world'
+
+                    h=g # not recommended although allowed
+        Now f, h, and g are all attributes of C.
+
+            Inheritance by
+                class <DerivedClassName>(<BaseClassName1, Base2, Base3>):
+                    <Statement-1>
+                    .
+                    .
+                    .
+                    <Statement-n>
+                    
+tuple::
+    
+
+
+
+        
+
 

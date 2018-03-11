@@ -1,0 +1,16 @@
+Author: Ainray
+Date: From 20160226, to
+Introduction: This document says my thougth about Mathematic of Discrete Fourier Transform.
+			It also documents some questions needed to be researched more deeply.
+
+Q1 Analytic Signal
+------------------
+	5.3.4, P97
+	
+Q2 Three dimensional plot and projections
+-----------------------------------------
+	5.3.7, Figure 5.9, P103
+	
+ Q3 analytic continuation
+ ------------------------
+    5.3.9, recover z transform from DTFT

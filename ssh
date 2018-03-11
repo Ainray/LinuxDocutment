@@ -58,9 +58,9 @@ ssh service sshd configuration::
                 sudo restart ssh
                 sudo systemctl restart ssh
 key::
-        RSA keys generation,
+        RSA keys generation in local host, and install public key in ssh server
 
-            ssh-keygen -t rsa [ -b 4096]
+            ssh-keygen -t rsa [ -b 4096] -C "Debian"
             ssh-copy-id <username>@<host>   # copy ssh key if shh login to some terminal
             ssh-copy-id inray@192.20.16.1   # copy ssh key if shh login to some terminal
 

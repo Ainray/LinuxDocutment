@@ -1,0 +1,39 @@
+英文							汉语				数学符号
+proposition						命题                       	p
+hypothesis						题设，假设
+conclusion						结论 
+theorem							定理                             
+negation						否				～p
+contrapositive					逆否				P->Q .vs. ~Q->~P
+equivalent						等价的				p<->Q
+exclusively or						
+permissively or 									x(-A or x (-B including the possibility x(-A & x(-B
+subset							子集				A is a subset of B <-> x(-A -> x(-B
+proper subset					真子集				
+superset						超集				
+univsersal set					全集
+empty set						空集
+interval						区间
+semi-closed						半闭的				[a,b)
+intersection					交集		
+union							并集				
+complement 						补集
+difference/relative comlement 	差集
+Russell's paradox				罗素悖论            "There is exists a set of which every set is a member" is nonsense.
+law of excluded middle			排中律				P or ~P is always true
+law of contradiction			矛盾律				P & ~P is always false
+cartesian product				笛卡尔积			
+divisor							因数				a|b, a is a divisor of b
+induced							限制,诱导			R|(A*A) is said be induced in A by R, R|(X*X)
+(direct) image					像					R(A)={y(-Y: xRy for some x (-A }, A is a subset of X
+inverse image					原像				R^-1(B)={x (-X: xRy for some y (-B}, B is subset of B
+singleton						单元素集			
+domain							定义域
+range							值域				
+composite						复合关系
+
+
+
+
+
+

@@ -43,6 +43,7 @@ imap; Internet message access protocol; alternative of pop3
 ldap; lightweight directory access protocol;
 MAN; metropolitan area network; 
 manet; mobile ad hoc network; also wanet, a decentralized type of network
+mcs; modulation and coding scheme;
 mda; monochrome display adapter; IBM monochrome 80*25 text mode card, also MDPA(~ ~ and Printer ~).
 mda; mail delivery agent; delivering messages to the user's mailboxes within a host
 mime; multipurpose internet mail extensions; Internet standard extending the format of email

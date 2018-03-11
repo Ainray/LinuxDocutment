@@ -49,3 +49,10 @@ regular::
     example:
         /^ *local\+      "matching leading local
 
+Syntastic::
+    disable Syntastic auto check by 
+        :SyntasticToggleMode
+    do no show flake8 quick fix
+        let g:flake8_show_quickfix=0
+    then recheck by press <F7> or call 
+        call flake8#Flake8()

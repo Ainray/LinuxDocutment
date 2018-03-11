@@ -20,5 +20,27 @@ ssh configuration::
         # /etc/ssh/sshd_config enable X11 forwarding
             X11Forwarding yes
 
-Windows 10 connection::
-        use Xbrower to connect Debian
+X server::
+    Windows 10 connection:
+        use Xbrower to as X server connect Debian
+
+    Linux enable authority by,
+        xhost + Alienware
+
+port::
+    xdmcp   177 udp
+    X11 protocal 6000-6005 tcp
+    xfs:X font server 7100 tcp
+
+log::
+    /var/log/auth.log
+
+using ssh:
+    ssh connection by,
+        ssh -X Alienware
+    then run any X client as you need.
+    
+X server management::
+    list current X server by
+        ps -C Xorg
+
