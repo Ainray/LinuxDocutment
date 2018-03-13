@@ -1,7 +1,0 @@
-epub::
-    fbreder
-    lucidor, depend on xulrunner
-
-lucidor::
-    an epub reader, need xulrunner engine, provided by firefox-esr-dev package.
-
