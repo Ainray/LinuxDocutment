@@ -4,6 +4,7 @@ Debian lightdm configuration::
         [XDMCPServer]
         enabled=true
         port=177
+        listen-address=192.20.39.1
         [LightDM]
         start-default-seat=false
 
@@ -26,6 +27,7 @@ X server::
 
     Linux enable authority by,
         xhost + Alienware
+        Xorg -terminal -query Alieware :1
 
 port::
     xdmcp   177 udp
@@ -44,3 +46,5 @@ X server management::
     list current X server by
         ps -C Xorg
 
+multiple login::
+    one user only allowed one logins.

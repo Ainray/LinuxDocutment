@@ -156,3 +156,7 @@ printf "file '%s'\n" $(ls VID_20180221_110311.mp4 VID_20180221_111533-2.mp4 VID_
 ffmpeg -f concat -i 1.txt -c copy VID_20180221_Marriage.mp4
 nmap debian -p 177
 sudo iw wlp60s0 connect ainray
+sudo useradd -p 123 guest
+lsb_release -a
+dm-tool list-seats
+convert Ainray_ID2_mobile.jpg -resize 648x648 Ainray_ID2_mobile_640.jpg

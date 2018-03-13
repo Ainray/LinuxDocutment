@@ -87,6 +87,8 @@ scp/sftp/rsync without passphrase entering::
             eval $(ssh-agent) 
             ssh-add
             ssh inray@192.20.16.1
+            scp test.txt inray@192.20.16.1:/tmp/
+            scp inray@Alienware:/etc/apt/sources.list ./sources.list (from Asus)
 
 local ssh configuration::
             # .ssh/config

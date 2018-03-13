@@ -1,4 +1,3 @@
-#!/bin/sh
 ########################################################################
 #                                                                      #
 # author:        Ainray                                                #
@@ -17,6 +16,24 @@
 # license:       Public license.                                       #
 #                                                                      #
 ########################################################################
+help::
+    help set
+
+debug::
+    bash -x script > log
+
+    debug parts in a script by,
+        set -x
+            debug part
+        set +x
+
+    change debug mode
+        set -f  ( or set -o noglob) disable file name generation 
+        set -v  ( or set -o verbose) prints shell input lines
+        set -x  ( or set -o xtrace) print command traces before executing command
+
+    use echo to print message
+
 Quote::
         Quotes preserve literal meaning of special character, that is, it stops
     Bash from intepretating it and maybe expanding it.
