@@ -58,3 +58,29 @@ touchpad::
                 Driver "libinput"
                 Option "Tapping" "on"
             EndSection
+resize home::
+    $ su
+    <passwd>
+    # umount /dev/sdaN   # check by df -Th, umount /home 
+    # fdisk /dev/sda
+    (command m for help): p   # check /home disk partition and record the start
+                              # start head of it
+    (command m for help): d   
+    (command m for help): <home partition>
+    (command m for help): n
+    (command m for help): <start sector> # must keep same as before
+    (command m for help): <end sector>   # to modified into approximate size
+    (command m for help): 
+    # e2fsck -f /dev/sdaN
+    # resize2fs /dev/sdaN  <size>        # the size must be less then its physical
+                                         # size given by e2fsck
+                                         # if not, when reboot, you will cannot
+                                         # enter system as usually because of
+                                         # /home cannot mount automatically
+                                         # It is better keep the size here same
+                                         # as the physical size given by e2fsck.
+
+    # mount /dev/sdaN                    # remount
+
+gpt or mbr::
+    $ sudo gdisk -l /dev/sda

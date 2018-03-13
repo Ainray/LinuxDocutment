@@ -1,0 +1,11 @@
+create a patch file::
+
+    diff -u wget-list wget-list-working > wget-list.patch
+
+apply a patch::
+    
+    patch < wget-list
+
+undo patch::
+
+    patch -R < wget-list
