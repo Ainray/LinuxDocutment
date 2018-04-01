@@ -1,0 +1,234 @@
+ipv6::
+        IPv6 is a new layer 3 protocol which will supersede IPv4. 
+    Layer 3 is responsible for end-to-end packet transport using packet
+    routing based on addresses.
+    
+localhost::
+        localhost address is 
+
+            0000:0000:0000:0000:0000:0000:0000:0001
+
+    and compressed one is  
+
+            ::1
+
+    Debian snap from /etc/hosts file gives
+            
+            # /etc/hosts
+            ::1     localhost ip6-localhost ip6-loopback
+
+ipv4-mapped ipv6 address::
+
+        These address are defined with a prefix of length 96 (a.b.c.d is
+    ipv4 address):
+
+        0:0:0:0:0:ffff:a.b.c.d/96
+
+    or in compressed format
+
+        ::ffff:a.b.c.d/96
+
+    These are sometimes used for sockets created by an IPv6-enable
+    daemon, but only binding to an IPv4 address.
+
+ipv4-compatible IPv6 address::
+        
+       For automatic tunneling, which is replace by 6to4 tunneling 
+
+            0:0:0:0:0:0:a.b.c.d/96
+    or 
+            ::.a.b.c.d/96
+
+link local address type::
+    
+        These special addresses will only be valid on a link of an
+    interface. Using this address as destination the packet would
+    never pass through a router. It's used as link communications 
+    such as:
+        . anyone else here on this link?
+        . anyone here with a special address
+    
+    They begin with (where x is any hex character, normally "0")
+        
+        fe8x: # current the only one is use
+        fe8x:
+        feax:
+        febx:
+
+site local address type::
+    
+       It has the capability to use the given 16 bits for a maximum
+   number of 65536 subnets, comparable with 10.0.0.0/8 in IPv4.
+
+        fecx: # most commonly used
+        fedx:
+        feex:
+        fefx:
+
+unique local ipv6 unicast addresses::
+        
+        fcxx:
+        fdxx: # currently the only in use
+        
+        A part of the prefix (40 bits) are generated using pseudo-random
+    algorithm, and it is improbable, that two generated ones are equal.
+    Example for a prefix,
+        fd0f:8b72:ac90::/48
+
+global address type (aggregatable) global unicast::
+
+        It begins with 
+
+        2xxx:
+        3xxx:
+        
+        6bone test address
+
+        3ffe:
+
+        Example:
+        3ffe:ffff:100:f102::1
+
+        6to4 addresses 
+
+        2002:
+
+        For example, representing 192.168.1.1/5:
+
+        2002:c0a8:0101:5::1
+
+assigned by provider for hierarchical routing::
+        These are delegated to Internet service providers (ISP) and
+    begin currently with 
+
+        2001:
+
+addresses reserved for examples and documentation::
+
+        3fff:ffff::/32
+        2001:0DB8::/32
+
+multicast address::
+    
+        ffxy:
+
+        Multicast scope is a parameter to specify the maximum distance a
+    multicast packet can travel from the sending entity. 
+        ffx1: node-local, packets never level the node
+        ffx2: link-local, packets are never forwarded by routers
+        ffx5: site-local, packets never leave the site
+        ffx8: organization-local, not so easy to implement, must be
+    covered by routing protocol
+        ffxe: global scope
+
+        Multicast types
+            ff01:0:0:0:0:0:0:1 all hosts on the local node
+            ff02:0:0:0:0:0:0:1 all hosts on the connected link
+            ff01:0:0:0:0:0:0:2 all routers on the local node
+            ff02:0:0:0:0:0:0:2 all routers on the connected link
+            ff05:0:0:0:0:0:0:2 all routers on the local site
+    Examples from /etc/hosts file in Debian,
+            ff02::1 ip6-allnodes
+            ff02::2 ip6-allrouters
+
+        solicited node link-local multicast address used as in
+    neighborhood discovery. For example,
+        
+        ff02::1:ff00:1234
+
+    is used "on-link" to find the corresponding node which has to send
+    reply containing its layer 2 MAC address.
+
+anycast addresses::
+    
+        These cannot be used as source address.
+
+        Subnet-router anycast address
+        For example, a node has a global assigned ipv6 address:
+            2001:db8:100:f101:210:a4ff:fee3:9566/64  # node's address
+    The subnet-router anaycast address will be created blinking the
+    suffix( least significant 64bits) completely:
+        2001:db8:100:f101::/64  # subnet-router anycast address
+
+address types host part::
+
+        The lower 64 bits as the host part of address in most current
+    address types.
+        
+        Stateless (automatically computated)
+
+        In most case, it computed from MAC or IPv4 by EUI-64 method,
+    for example, 
+        00:10:a4:01:23:45 (MAC) -> 0210:a4ff:fe01:2345 (64 bits) 
+    With a given prefix, the result ipv6 address is:
+        2001:0db8:0100:f101:0210:a4ff:fe01:2345
+        
+        Manually set
+        
+        For manual suffixes like "::1", it is required that the 7th
+    most significant bit is set to 0.
+        2001:0db8:100:f101::1
+
+netmasks (prefix length)::
+        
+        It is also called the slash notation. An example:
+            2001:0db8:100:1:2:3:4/48
+    gives network
+            2001:0db8:0100:0:0:0:0:0
+    and netmask
+            ffff:ffff:ffff:0000:0000:0000:0000:0000
+        
+        matching a route
+
+        The route with biggest prefix length matches first. For example,
+    if a routing table shows following entries:
+        2001:0db8:100::/48      ::              U  1 0 0 site1
+        2000::/3                :: 192.88.99.1  UG 1 0 0 tun6to4
+    Packets with shown destination address will be routed through shown
+    device:
+        2001:0db8:100:1:2:3:4:5/48 # routed through device site1
+        2001:0db8:200:1:2:3:4:5/   # routed through device tun6to4
+
+Linux ipv6-ready kernel
+
+        Check ipv6 support by 
+        [ -f /proc/net/if_inet6 ] && echo "Running kernel is IPv6 ready"
+    For example, from Debian, cat /proc/net/if_inet6 gives:        
+        fe80000000000000224747fffed9f03a 02 40 20 80  enp59s0
+        00000000000000000000000000000001 01 80 10 80       lo
+        2400dd0110310046224747fffed9f03a 02 40 00 00  enp59s0
+        fe80000000000000020ec6fffefb151b 03 40 20 80 enx000ec6fb151b
+        fe800000000000009eb6d0fffe04121f 04 40 20 80  wlp60s0
+    Debian kernels include ipv6 handling in the core kernel, instead of
+    compiling it as module named ipv6.
+     
+ipv6 commands::
+   
+        detect ipv6-active hosts on a link,
+            ping6 -I enp59s0 ip6-allnodes
+            ping6 sixv
+        trace path,
+            sudo traceroute -I -n sixv
+            traceroute6 sixv
+            tracepath sixv
+        packet capturing
+            sudo tcpdump -t -n -i enp59s0 -s 512 -vv ip6
+
+ipv6 configuration::
+
+        enable privacy extension
+            
+            echo 2 |sudo tee /proc/sys/net/ipv6/conf/enp59s0/use_tempaddr
+            sudo ifdown enp59s0
+            sudo ifup enp59s0
+            
+    After setting, check it from ip.bieringer.de
+    check router by, 
+        ip -6 route show |grep enp59s0
+        /sbin/route -A inet6 |grep enp59s0
+    and check neighbors by 
+        ip -6 neigh show
+    show tunnel by
+        ip -6 tunnel show 
+
+    

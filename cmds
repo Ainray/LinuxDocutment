@@ -160,3 +160,18 @@ sudo useradd -p 123 guest
 lsb_release -a
 dm-tool list-seats
 convert Ainray_ID2_mobile.jpg -resize 648x648 Ainray_ID2_mobile_640.jpg
+nmap 8.8.8.8 -Pn
+ping6 -I enp59s0 ff02::1
+ping6 sixv
+sudo traceroute -I -n sixv
+traceroute6 sixv
+tracepath sixv
+sudo tcpdump -t -n -i enp59s0 -s 512 -vv ip6
+ip -6 route show |grep enp59s0
+/sbin/route -A inet6 |grep enp59s0
+ip -6 neigh show
+jupyter-notebook 5a_CSEM.ipynb
+sudo iptables -t mangle -A PREROUTING -p icmp --icmp-type echo-request -j LOG --log-prefix "mangle PREROUTING echo-request" 
+sudo iptables -t nat -A PREROUTING -p icmp --icmp-type echo-reply -j LOG --log-prefix "nat PREROUTING echo-request"
+convert freimp_np2_spectrum_500.png -transparent white freimp_np2_spectrum_500_t.png
+fuser -m /mnt/usb

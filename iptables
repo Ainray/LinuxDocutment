@@ -1,0 +1,281 @@
+author: ainray
+date: 20180128
+topic: iptables
+reference:
+    [1] http://www.linuxhowtos.org/Security/iptables.htm#kernelsetup
+    [2] https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html#TCPIPREPETITION
+    
+    The state machine is really a connection tracing machine. Connection tracking is done to let 
+Netfilter framework know the state of a specific connection. Firewalls that implement this are 
+generally called stateful firewalls. 
+    Within iptables, packets can be related to tracked connections in four different so called 
+states, NEW,ESTABLISHED,RELATED,INVALID. All of the connection tracking is done by special framework
+within the kernal call conntrack (as a module or an internal part of kernel itself.) Now defragmentation
+is incorporated into conntrack and is carried out automatically. It can not be turned off except by 
+turning off connection tracking.
+    All connection tracking is handled in the PREROUTING chain, except locally generated packets which
+are handled in the OUTPUT chain. For example, if we send the initial packet in a stream, the state gets
+set to NEW in the OUTPUT chain, and when we receive a return packet, the state gets changed to ESTABLISHED
+in the PREROUTING. If the first initial packet is not originated by ourself, the NEW state is set within
+PREROUTING chain of course. So all state changes and calculations are done within the PREROUTING and OUTPUT
+chains of the NAT table.
+    User-land states
+    NEW, the packet is the first packet that we see
+    ESTABLISHED, see traffic in both directions and will then continuously match those packets. ICMP error
+messages and redirects etc can also be considered as ESTABLISHED, if we have generated a packet that in turn
+generated the ICMP mesage.
+    RELATED, a connection is considered RELATED when it is related to another already ESTABLISHED connection.
+FTP-data connections are considered RELATED to the FTP control port, and so are the DCC connections issued 
+through IRC. This could be used to allow ICMP replies, FTP transfers and DCC through the firewall.
+    INVALID, packets cannot be identified or that it does not have any state. Generally, it is a good idea to
+DROP everything in this state.
+    
+    How packets traverse tables and chains
+    Destination local host
+    --------------------------------------------------------------------------------------
+    step    table   chain       comment
+    --------------------------------------------------------------------------------------
+    1                           on the wire (e.g., Internet)
+    2                           comes in on the interface (e.g., eth0)
+    3       mangle  PREROUTING  mangling packets, i.e., changing TOS and so on
+    4       nat     PREROUTING  for DNAT mainly
+    5                           routing decision
+    6       mangle  INPUT       manage packets after they have been routed, but before
+                                they actually sent to the process on the machine
+    7       filter  INPUT       do filtering for all incoming traffic destined for our local
+                                host. All incoming packets destined for this host pass through
+                                this chain, no matter what interface or in which direction they
+                                came from.
+    8                           local process/application
+    --------------------------------------------------------------------------------------
+
+    Source local host
+    --------------------------------------------------------------------------------------
+    step    table   chain       comment
+    --------------------------------------------------------------------------------------
+    1                           local process/application
+    2                           routing decision(source address, outgoing interface and so on)
+    3       mangle  OUTPUT      no filter in this chain is suggested due to side effect
+    4       nat     OUTPUT      NAT outgoing packets from the firewall itself
+    5       filter  OUTPUT      filter packets here
+    6       mangle  POSTROUTING manage packets after routing decision but before they actually 
+                                are sent outside, both packets traversing the firewall and
+                                packets created by the firewall itself hit this chain
+    7       nat     POSTROUTING SNAT, do not do filtering here
+    8                           go out on some interface (e.g., eth0)
+    9                           on the wire (e.g., Internet)
+    --------------------------------------------------------------------------------------
+
+    Forwarded packets
+    --------------------------------------------------------------------------------------
+    step    table   chain       comment
+    --------------------------------------------------------------------------------------
+    1                           on the wire (e.g., Internet)
+    2                           comes in on some interface (e.g., eth0)
+    3       mangle  PREROUTING  mangling packets such as changing TOS and so on
+    4       nat     PREROUTING  DNAT mainly, SNAT further on
+    5                           routing decision
+    6       mangle  FORWARD     manage ...
+    7       filter  FORWARD     do filtering here
+    8       mangle  POSTROUTING mange ...
+    9       nat     POSTROUTING SNAT, do not do filtering here; some certain packets
+                                might pass this chain without ever hitting it. 
+                                This is also MASQUERAD is done
+    10                          go out on some interface (e.g., eth1)
+    11                          out on the wire(i.e., LAN)
+    --------------------------------------------------------------------------------------
+    For example, we get a packet from Internet, it suffers to MANGLE/PREROUTING and NAT/PREROUTING,
+then first routing decision whether this packet is destined some IP the firewall is listening to or not,
+we send the packet through the INPUT chain ( destined local) or FORWARD chain. In some case, the packets
+is destined for local host, but the destination address may be changed within the NAT/PREROUTING(DNAT)
+before the first routing decision.
+
+    Targets of tables
+    Mangle, TOS/TTL/MARK
+    Nat,    DNAT/SNAT/MASQUERADE. DNAT, is used in cases where you have a public IP and want
+to redirect accesses to the firewall to some other host. 
+    SNAT,  hide local networks to make connections from the LAN to the Internet.
+    MASQUERADE, used in the same way as SNAT, but the MASQUERADE target takes a little bit more
+overhead to compute.
+    Filter, DROP/ACCEPT
+
+                ACCEPT
+            --------------->
+                DROP    \ /
+            ---------------
+                        / \
+
+              CHAIN 1           CHAIN 2
+            ----------         ----------
+            | RULE 1 |  Calling|        |
+            |  ...   |  /----->| RULE n |
+            |  ...   | /      /|        |
+            | RULE n |/      / |        |
+            |RULE n+1|<------  |        |
+            |  ...   | Return  |        |
+            ----------         ----------
+
+    Built-in chains
+                                      
+                  ------------        INPUT        -----------
+                  | server   |  <----------------- | Host 1  |
+                  ____________                     -----------     
+                                                                    /-------\
+                  ------------        INPUT        -----------     /         \
+                  | Host     |  ---------------->  | server  |---> | Internet|
+                  ____________                     -----------     |         |
+                                                                   \         /
+                                                                    \-------/
+
+test result::
+        Test basic rules,
+        #----------------------------------------------------------------------------------------------------
+                    #!/bin/bash
+                    #
+                    # rc.test-iptables - test script for iptables chains and tables.
+                    #
+                    # Copyright (C) 2001  Oskar Andreasson &lt;bluefluxATkoffeinDOTnet&gt;
+                    #
+                    # This program is free software; you can redistribute it and/or modify
+                    # it under the terms of the GNU General Public License as published by
+                    # the Free Software Foundation; version 2 of the License.
+                    #
+                    # This program is distributed in the hope that it will be useful,
+                    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+                    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                    # GNU General Public License for more details.
+                    #
+                    # You should have received a copy of the GNU General Public License
+                    # along with this program or from the site that you downloaded it
+                    # from; if not, write to the Free Software Foundation, Inc., 59 Temple
+                    # Place, Suite 330, Boston, MA  02111-1307   USA
+                    #
+
+                    #
+                    # Filter table, all chains
+                    #
+                    iptables -t filter -A INPUT -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="filter INPUT: echo-request "
+                    iptables -t filter -A INPUT -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="filter INPUT: echo-reply "
+                    iptables -t filter -A OUTPUT -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="filter OUTPUT: echo-request "
+                    iptables -t filter -A OUTPUT -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="filter OUTPUT: echo-reply "
+                    iptables -t filter -A FORWARD -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="filter FORWARD: echo-request "
+                    iptables -t filter -A FORWARD -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="filter FORWARD: echo-reply "
+
+                    #
+                    # NAT table, all chains except OUTPUT which don't work.
+                    #
+                    iptables -t nat -A PREROUTING -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="nat PREROUTING: echo-request "
+                    iptables -t nat -A PREROUTING -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="nat PREROUTING: echo-reply "
+                    iptables -t nat -A POSTROUTING -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="nat POSTROUTING: echo-request "
+                    iptables -t nat -A POSTROUTING -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="nat POSTROUTING: echo-reply "
+                    iptables -t nat -A OUTPUT -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="nat OUTPUT: echo-request "
+                    iptables -t nat -A OUTPUT -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="nat OUTPUT: echo-reply "
+
+                    #
+                    # Mangle table, all chains
+                    #
+                    iptables -t mangle -A PREROUTING -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="mangle PREROUTING: echo-request "
+                    iptables -t mangle -A PREROUTING -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="mangle PREROUTING: echo-reply "
+                    iptables -t mangle -I FORWARD 1 -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="mangle FORWARD:  echo-request "
+                    iptables -t mangle -I FORWARD 1 -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="mangle FORWARD: echo-reply "
+                    iptables -t mangle -I INPUT 1 -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="mangle INPUT: echo-request "
+                    iptables -t mangle -I INPUT 1 -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="mangle INPUT: echo-reply "
+                    iptables -t mangle -A OUTPUT -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="mangle OUTPUT: echo-request "
+                    iptables -t mangle -A OUTPUT -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="mangle OUTPUT: echo-reply "
+                    iptables -t mangle -I POSTROUTING 1 -p icmp --icmp-type echo-request \
+                    -j LOG --log-prefix="mangle POSTROUTING: echo-request "
+                    iptables -t mangle -I POSTROUTING 1 -p icmp --icmp-type echo-reply \
+                    -j LOG --log-prefix="mangle POSTROUTING: echo-reply "
+        #----------------------------------------------------------------------------------------------------
+
+        In Windows cmd run
+
+            ping 172.20.16.39 -n 1 # ping Debian gateway from Windows
+
+    we can see icmp go through:
+        mangle PREROUTING (echo -request, type 8)
+        nat PREROUTING (echo-request)
+        mangle INPUT (echo-request)
+        filter INPUT (echo-request)
+        mangle OUTPUT (echo-reply type 0)
+        filter OUTPUT (echo-reply)
+        mangle POSTROUTING (echo-reply)
+
+        In Debian, run
+
+            ping locolhost -c 1
+
+    it does not go through any tables, then run
+        
+            ping igggateway/iggdns/windows -c 1
+
+    it gives, whenver NAT is enabled or not
+        mangle OUTPUT (echo-request)
+        nat OUTPUT (echo-request)
+        filter OUTPUT (echo-request)
+        mangle POSTROURING (echo-request)
+        nat POSTROUTING (echo-request)
+        mangle PREROUTING (echo-replay)
+        mangle INPUT (echo-reply)
+        filter INPUT (echo-reply)
+    
+    When these commands above are run on the remote X server terminal, it
+    gives the same result.
+
+author: ainray
+date: 20180131
+topic: NAT and iptables
+    
+    NAT
+
+        NAT allows a host or several hosts to share the same IP address.
+    Disadvatages of SNAT
+
+        A computer located in the Internet is not able to establish a connection to a local
+    computer. When you run a sever in the local computer, you want it can be accessed from
+    the Ineternet.
+
+    SNAT/DNAT vs MASQUERADE
+        
+        SNAT and MASQUERADE are synonyms. SNAT must explicitly specify the new soure-IP, which is
+    preferred by a Linux router with static IP and is faster than MASQUERADE which has to check 
+    the current IP address of the outgoing network interface at every packet.
+
+            iptables -t nat -A POSTROUTING -o ${eth1} -j MASQUERADE
+            iptables -t nat -A POSTROUTING -o ${eth1} -j SNAT --to-source 172.20.16.39
+        
+        DNAT can be used to get severs running behind a firewall to be accessed. A special case of
+    DNAT is REDIRECT. Packets are redirected to a local port of the router, enabling for example
+    transparent proxying. 
+
+            # transparent proxying example
+            # (local net at eth0, proxy server at port 8080)
+            # transparent proxying has a high CPU load especially for really large networks
+                iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-ports 8080
+            
+            # dnat example
+            # HTTP-server iwth ip 192.168.1.2 and router has IP address 192.168.1.1 and
+            # router's Internet IP 123.123.123.123 over interface (eth1)
+            # runing this following command in router.
+                iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 80 -j DNAT --to 192.168.1.2
+        

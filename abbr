@@ -25,7 +25,9 @@ CA; certificate authority;
 cf; compact flash;
 cga; color graphics adapter; IBM first graphics card and first color card for IBM PC.
 cidr; classless interdomain route;
+csv; comma separated values;
 dhcp; dynamic host configuration protocol;
+dhh; dual homed host;
 dns; domain name system;
 Dos; denial of service; Dos attacks.
 dsa; directory system agent; an ldap server, by default on tcp/udp port 389, port 636 for ldaps(ldap over ssh)
@@ -34,12 +36,15 @@ EAP; extensible authentication protocol; rfc3748/2284/5247, an authentication fr
 ebgp; ; opposite ibgp, in rare case where it is used in place of interior protocols(igrp,rip, etc.) 
 ega; enhanced graphics adapter; IBM after cga
 egp; exterior gateway protocol;
+emc; electromagnetic compatibility;
+enso; EI Nino southern Oscillation;
 ere; extended regular expression;
 essid; extended service set identifier;
 iana; internet assigned numbers authority;
 ibgp; ; used inside an autonomous system, works much like "network neighborhood"
 ibss; independent basic service set; also known as wireless ad-hoc network
 imap; Internet message access protocol; alternative of pop3
+ivf; in-vitro fertilization;
 ldap; lightweight directory access protocol;
 MAN; metropolitan area network; 
 manet; mobile ad hoc network; also wanet, a decentralized type of network
@@ -72,6 +77,7 @@ sd card; secure digital card; sdsc refer to sd standard-capacity
 sdhc; secure digital high capacity;
 sdxc; secure digital extended-capacity;
 sdio; secure digital with io;
+sit; simple Internet transition; ipv6-in-ipv4 tunnel 
 slaac; stateless address autoconfiguration; 
 smtp; simple mail transfer protocol; rfc 5231, 5322, 6531
 socket;; combination of IP-address and port number
@@ -90,6 +96,7 @@ udp; user data protocol;
 vcs; virtual console screen;
 vesa; video electronics stands association;
 vga; video graphics array; 640*480 resolution
+vlsm; variable-length subnet masking;
 vnc; virtual network computing; used to display and access a Linux desktop from a system anywhere else on a network.
 vpn; virtual private network; extends a private network across a public network
 vps; virtual private server;

@@ -1,0 +1,12 @@
+show::
+    target platform,
+        
+            gcc -dumpmachine
+
+    library serach path,
+    
+            ld --verbose
+
+show linked files::
+
+    gcc test.c  -W1,--verbose 2>&1 |less

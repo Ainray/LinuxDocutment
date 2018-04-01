@@ -1,0 +1,3 @@
+link, a layer 2 network packet transport medium, examples are Ethernet, Token Ring, PPP, SLIP, ATM, IDSN, Frame Relay, ...
+router, a node with two or more network (physical or virtual )interfaces, capable of forwarding packets between the interfaces.
+dual homed host, a node with two (physical or virtual) interfaces of two different links, but does not forward any packets between each other

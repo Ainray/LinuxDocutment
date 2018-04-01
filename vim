@@ -39,12 +39,13 @@ Spellcheck::
   z= "see suggestions
   zg "add misspelled word under cursor to your personal spellfile, maybe ~/.vim/spell/en.utf-8.add
   zG "ignore the misspelled word under cursor for this ssesion
-  zw "to mark correcly spelled word under cursor as a misspeeling
+  zw "to mark correctly spelled word under cursor as a misspeeling
 
 regular::
 
     *   any number
     \+  one or more
+    \w  [a-zA-z]
 
     example:
         /^ *local\+      "matching leading local
@@ -56,3 +57,7 @@ Syntastic::
         let g:flake8_show_quickfix=0
     then recheck by press <F7> or call 
         call flake8#Flake8()
+
+word separator::
+    temporarily allow - as a in word for * check word by,
+        set iskeyword=+-

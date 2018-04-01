@@ -59,6 +59,16 @@ touchpad::
                 Option "Tapping" "on"
             EndSection
 
+fdisk::
+partition::
+    create new partition by
+        (command m for help): n   
+        (command m for help): <Enter>   
+        (command m for help): +10G
+
+    create file system by,
+        mkfs -v t ext4 /dev/sda10
+
 resize home::
     $ su
     <passwd>
@@ -103,6 +113,11 @@ user::
         create home directory for him by
             # mkdir /home/guest
             # chown guest:guest /home/guest
+        change uid and gid
+            # usermod -u 2005 inray
+            # groupmod -g 3000 inray
+        add a member
+            # usermod -a -G users inray
 
 upgrade::
         sudo apt update
@@ -282,5 +297,22 @@ boot into desktop or not ::
     set default login by
 
         sudo systemctl set-default multi-user.target
+
+swap::
+    make swap file system by,
+
+        sudo mkswap /dev/sda12
+
+    mount swap by
+        
+        sudo /sbin/swapon -v /dev/sda12
+
+    umount it by
+
+        sudo /sbin/swapoff -v /dev/sda12
+
+    check it by 
+
+        free -h
 
 

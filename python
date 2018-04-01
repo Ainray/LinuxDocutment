@@ -338,6 +338,12 @@ class::
                     
 tuple::
     
+symbol::
+    integrate by,
+
+        from sympy import *
+        from sympy.abc import *
+        integrate(exp(-t),(t,0,oo))
 
 
 
