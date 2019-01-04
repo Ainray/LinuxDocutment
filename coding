@@ -1,3 +1,11 @@
 convert coding::
-   iconv -f GBK -t UTF-8 Ainray.txt > Ainray.txt.linux 
+    iconv -f GBK -t UTF-8 Ainray.txt > Ainray.txt.linux 
+
+uft8::
+    check utf8 code number,
+        echo -e '\u8d25'
+
+check coding::
+    enca
+
 

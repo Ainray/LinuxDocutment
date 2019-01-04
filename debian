@@ -259,6 +259,9 @@ usb::
     label(ntfslabel from ntfs-3g)
         sudo ntfslabel /dev/sdb1
         sudo ntfslabel /dev/sdb1 Debian
+    fix ntfs file system due to Windows fast boot or Hibernate, read-only file system
+        ntfsfix /dev/sda10
+
 cli:
     booted into cli directly when Linux is started
         sudo systemctl set-default mutli-user.target

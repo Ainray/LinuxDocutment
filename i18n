@@ -1,0 +1,7 @@
+check code
+
+    enca -L zh prb-20180823.txt
+
+line terminator
+    
+    dos2unix prb-20180823.txt

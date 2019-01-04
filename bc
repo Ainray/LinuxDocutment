@@ -1,0 +1,1 @@
+echo "ibase=16;obase=A;A"   // A must upper case

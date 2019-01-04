@@ -1,0 +1,13 @@
+/etc/samba/smb.conf
+
+[share]
+    comment = references
+    path = /home/inray/refs
+    public = no
+    browseable = yes
+    read only = no
+    valid users = inray 
+    create mask = 0700
+    directory mask = 0700
+
+sudo smbpasswd -a inray

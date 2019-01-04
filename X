@@ -147,3 +147,29 @@ X-howtos::
     Run X client in rootless mode under Linux, first enable X11 forwarding
         ssh -Y ainray@172.22.11.251
     then just run client program as you are seated in front of remote computer.
+
+Multiple monitors::
+multiple monitors::
+    Refer X protocol screen as SCREEN. 
+    SCREEN has a one-to-one correspondence with a physical display device(a monitor).
+    SCREEN has one-to-one correspondence with graphics cards.
+
+    When a graphical application starts, it connects to an X server (DISPLAY, host:displayno.screen).
+For example, :0.0 mean local computer, X server instance 0, screen 0.
+   
+Xinerama::
+    
+    Xinerama feature is intended to combine the graphics cards into a single SCREEN.
+    Xinerama extension (provided by libXinerama) allows application to query
+physical monitor configuration.
+
+    Drawbacks, 
+    + 2D rendering operation must be executed on every card, which
+leads to time-costs (X server is single-threaded) and memory costs.
+    + GLX/3D acceleration is not supported.
+    + all monitors share DPI(dots-per-inch)
+
+Dual-head graphics cards
+dual heads::
+    Zaphod mode,  one SCREEN per head, DPI is right for each monitor.
+    TwinView mode (Nvidia), default is cloned views.

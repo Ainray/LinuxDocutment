@@ -1,21 +1,3 @@
-########################################################################
-#                                                                      #
-# author:        Ainray                                                #
-#                                                                      #
-# email:         wwzhang0421@163.com                                   #
-#                                                                      #
-# file:          bash                                                  #
-#                                                                      #
-# created:       2017-12-24 20:20:50                                   #
-#                                                                      #
-# modified:      2017-12-24 23:22:30                                   #
-#                                                                      #
-# introduction:  Someting about Bash. This a not a working script,     #
-#the first line just is for using vim syntax colors.                   #
-#                                                                      #
-# license:       Public license.                                       #
-#                                                                      #
-########################################################################
 help::
     help set
 
@@ -113,3 +95,10 @@ test::
 source::
         check a script is sourced or not, by 
         [[ $_ != $0 ]] && ISSOURCE=1 || ISSOURCE=0
+
+string::
+    replace,
+        ${str/apple/APPLE}  # replace the first one
+        ${str//apple/APPLE} # replace all occurances
+        ${str/#apple/APPLE} # replace str starting with apple
+        ${str/%apple/APPLE} # replace str ending with apple

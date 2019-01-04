@@ -1,0 +1,12 @@
+Macro with parameter
+    1. There is no space between macro name and left parenthesis (under
+gcc)  
+
+    2. Refer to macro parameter as string, using #, for example,
+
+        #define assert1(test) if(!(test)) \
+            fprintf (stderr, "Assertion failed: %s, file %s, line %i\n", \
+                    #test, __FILE__, __LINE__)
+
+
+

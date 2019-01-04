@@ -22,6 +22,7 @@ bgp; border gateway protocol; used mostly by ISP's to share information about di
 bgp4; ; 
 bre; basic regular expressions;
 CA; certificate authority;
+cce; cloud container engine;
 cf; compact flash;
 cga; color graphics adapter; IBM first graphics card and first color card for IBM PC.
 cidr; classless interdomain route;
@@ -32,6 +33,7 @@ dns; domain name system;
 Dos; denial of service; Dos attacks.
 dsa; directory system agent; an ldap server, by default on tcp/udp port 389, port 636 for ldaps(ldap over ssh)
 dsl; digital subscriber line;
+ecs; elastic cloud server;
 EAP; extensible authentication protocol; rfc3748/2284/5247, an authentication framework
 ebgp; ; opposite ibgp, in rare case where it is used in place of interior protocols(igrp,rip, etc.) 
 ega; enhanced graphics adapter; IBM after cga
@@ -73,6 +75,7 @@ QoS; Quality of service; the description or measurement of the overall performan
 rfc; request for comments; to propose new Internet standards
 rsa; Rivest-Shamir-Adleman; one of the first public-key cryptosystems
 rsn; robust secure network; part of 802.11i to establish secure communication over an 802.11 wireless network
+rtu; remote terminal unit;
 sd card; secure digital card; sdsc refer to sd standard-capacity
 sdhc; secure digital high capacity;
 sdxc; secure digital extended-capacity;

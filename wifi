@@ -1,0 +1,6 @@
+public wifi::
+    
+    iface wlp60s0 inet dhcp
+
+    wireless-essid ChinaNet-CqGrandHotel-1611
+

@@ -1,0 +1,75 @@
+    Class inheritance::
+        A pointer to a derived class is type-compatible with a pointer to
+    its base class.
+
+    What does virtual function do::
+        It allow a member of a derived class with same name as one in the
+    base class to be appropriately called from a pointer to the base
+    class.
+        A class that declares or inherits a virtual function is called a
+    polymorphic class.
+
+        Example:
+            
+            class polygon{
+              protected:
+                int width, height;
+              public:
+                void set(int a, int b){width=a;height=b;}
+                virtual int area(){return 0;}
+            };
+            class rect::public polygon{
+              public:
+                int area(){return width*height;}
+            };
+            class tri:: public polygon{
+              public:
+                int area(){return (width*height)/2;}
+            };
+            int main(){
+              rect r; tri t; polygon p, *pp1,*pp2,*pp3;
+              pp1=&r;pp2=&t;pp3=&p;
+              pp1->set(4,5);pp2->set(4,5);pp2->set(4,5);
+              cout<< pp1->area()<<"\t"<<pp2->area()<<"\t"<<pp3->area()<<endl ;
+              return 0;
+            }
+
+    Abstract base class and pure virtual function::
+        An abstract base class cannot be used to instantiate objects, can
+    can be used to create pointers to it.
+        Example:
+            class poly{
+              protected:
+                int width, height;
+              public:
+                void set(int a,int b){width=a;height=b;}
+                virtual int area ()=0;
+            }
+
+    Why it is useful?
+        Example:
+            class poly{
+              protected:
+                int width, height;
+              public:
+                void set(int a,int b){width=a;height=b;}
+                virtual int area ()=0;
+                // we donot need to define print function for every derived class
+                // this is very useful for some great project.
+                void print(){cout<< this->area()<<endl;}
+            }
+        Example:
+            class animal{
+              public:
+                void eat(){cout<<"animal";}
+            }
+            class cat: public animal{
+              public:
+                void eat(){cout<<"animal";}
+            }
+            // exploit inheritance is type-compatible, we can define a
+            // common interface 
+            void eat (animal * pa){pa->eat();}
+            
+            // if we want correct eat function is called, it should be
+            // virtualised.

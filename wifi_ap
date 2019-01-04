@@ -621,3 +621,12 @@ WIFI device must support AP mode
                             usage |less && exit 1
                     esac
         # ----------------------------------------------------------------------------
+
+two virtual wlan interfaces::
+    create virtual interfaces,
+
+        sudo iw dev wlp60s0 interface add wlp60s0_ap type __ap addr 9c:b6:d0:04:12:00
+        sudo iw dev wlp60s0 interface add wlp60s0_sta type managed addr 9c:b6:d0:04:12:ff
+
+    isc-dhcp-service configuration file,
+        /etc/default/isc-dhcp-server

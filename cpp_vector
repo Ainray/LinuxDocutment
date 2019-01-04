@@ -1,0 +1,14 @@
+std::vector
+    
+    template <class T, class Alloc = allocator<T> > class vector; //generic template
+
+
+Vectors:
+    
+        Vectors are contiguous storage locations for their elements, which
+    means that their elements can also be accessed using offsets on
+    regular pointers to its elements.
+
+
+        Comparing to quick insertion and removes, it supports efficient
+    random access to its element and operation at the end.

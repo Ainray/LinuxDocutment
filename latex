@@ -1,3 +1,31 @@
+install latex package::
+    install texlive from scratch
+        
+        cd /mnt/usb
+        su
+        <passwd>
+        ./install-tl
+
+    post-install setup
+        PATH=/usr/local/texlive/2018/bin/:$PATH; export PATH
+        # defualt size is A4
+        # tlmgr paper letter
+    test
+        latex small2e
+    tlmgr
+            tlmgr option repository ctan
+        or 
+            tlmgr option repository http://mirror.ctan.org/systems/texlive/tlnet
+
+        tlmgr init-usertree
+        tlmgr update --list
+        tlmgr update --all
+        tlmgr info <package>
+
+        sudo apt-get install xzdec
+        tlmgr remove <package>
+        tlmgr install <package>
+
 characters:
     [0-9]
     [a-z]

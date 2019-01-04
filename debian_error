@@ -1,9 +1,3 @@
-W: There is no public key available for the following key IDs:
-A: sudo apt-get install debian-keyring debian-archive-keyring
-***************
-W: You are in emergency mode ...
-A: check disk partition by fsck, and check mount, 
-   I am in the case, my partition logical size is
-   larger than by its physical size. Try e2fsck.
-   refer debian|resize home::
-
+E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
+E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+A: sudo rm /var/lib/dpkg/lock

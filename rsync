@@ -37,7 +37,9 @@ topic: rsync
     and 
             rsync -avR --info=progress2 /home/inray/utorrent/[file] d1/
         
-        The latter one will create new path "d1/home/inray/utorrent" in the destination path "d1",
+        The first one will be copied as a regular file, and its referent
+    is still valid. So you can copy both symbol link and its referent. 
+    The latter one will create new path "d1/home/inray/utorrent" in the destination path "d1",
     so the original symbolic link file "utorrent" now is a directory, its contents are coped into
     "d1/home/inray/utorrent/".
 

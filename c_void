@@ -1,0 +1,17 @@
+  The value of a void object may not be used in any way, and neither
+explicit nor implicit conversion to any non-void type may be applied.
+
+ A void expression may be used as the left operand of a comma operator.
+
+      /* assert.h */
+      #define assert(test) ((void)0)
+
+  Any pointer to an object may be converted to type void * without loss
+of information. If the result is converted back to the original pointer
+type, the original pointer is recovered.
+
+
+ A macro must can be expanded into a void expression.
+        (assert(0<x),x<y)
+
+

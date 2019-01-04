@@ -1,0 +1,35 @@
+MVVM::
+prism::
+    source,
+        https://api.nuget.org/v3/index.json
+        
+    install command,
+        Install-Package Prism.Wpf -Version 7.1.0.431
+
+Attribute::
+    Parse order, 
+        + MarkupExtension, object returned by the markup extension used
+    as value
+Style::
+    + Namespace, System.Windows
+    + Assembly, PresentationFramework.dll
+    + To, to share property, event handler, resources between instances of a type
+
+    declaration,
+
+        <Style x:Key="Style1">
+            <Setter Property="Control.Background" Value="Yellow"/>
+        </Style>
+
+    usage
+        
+        <Label Content"Yellow Background" Style="{StaticResource Style1}"/>
+
+    declaration with target type,
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value"Segoe Black"/>
+            <Setter Property="HorizontalAlignment" Value"Center"/>
+            <Setter Property="FontSize" Value"12pt">
+            <Setter Property="Foreground" Value"#777777"/>
+        </Style>

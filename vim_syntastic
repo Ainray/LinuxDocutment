@@ -1,0 +1,36 @@
+general vimrc setting
+
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+
+list checkers of current filetype and other information
+        
+        SyntasticInfo
+
+switch mode
+
+        SyntasticToggleMode
+
+        let g:syntastic_mode_map = {
+            \ "mode": "active",
+            \ "active_filetypes": ["ruby", "php"],
+            \ "passive_filetypes": ["puppet"] }
+
+manually check
+        
+        SyntasticCheck
+
+open location-list window
+
+        Errors
+close location-list window
+
+        lclose
+

@@ -215,6 +215,16 @@ module::
             dir(sys)
             dir(__buildins__)
 
+ndarray::
+        >>>type(imhs1)
+        <type 'numpy.ndarray'
+        
+        >>>imhs1.shape
+        (10001,5)
+        >>>imhs1[1,1]
+        >>>imhs1[1,]
+        >>>imhs1[:,1]
+            
 environment variables::
             get environment variables
                 os.environ.get('HOME')
@@ -345,7 +355,9 @@ symbol::
         from sympy.abc import *
         integrate(exp(-t),(t,0,oo))
 
-
+ipython::
+    zoom in and out by
+        ctrl+shift+"+", ctrl+"-"
 
         
 

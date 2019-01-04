@@ -1,0 +1,10 @@
+Character       digraph     Unicode     note
+
+n₀              0s                      subscript
+N²              2S                      superscript
+∃               TE          2203  
+≠               !=          2260
+≤               =<          2264        <= is ⇐
+≥               >=          2265        => is ⇒
+Θ               H*          0398        
+Ω               W*          03a9

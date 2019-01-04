@@ -1,10 +1,12 @@
+move::
+    1. key word hyperlink: Ctrl+] and Ctrl+T
 function::
-   1. definition syntax
-      :fu[nction][!] {name}([arguments]) [range] [abort] [dict] [closure]
-      function, vim key word
-      !, force redefine funtion with the same name as a existed function
-      {name}, first char must be caplitalized
-      [arguments], conveyed as a pointer-like way
+    1. definition syntax
+       :fu[nction][!] {name}([arguments]) [range] [abort] [dict] [closure]
+       function, vim key word
+       !, force redefine funtion with the same name as a existed function
+       {name}, first char must be caplitalized
+       [arguments], conveyed as a pointer-like way
 Tricks::
   command-line window:
     q:(in normal mode) to open it
@@ -19,6 +21,10 @@ Tricks::
     :v/error\|varn\|fail/d
   execute current yanked command:
     :@"
+  search current word or character
+    :yw
+    /<C-R><C-R>"
+    :yl
   one-line multiple replacement
     call feedkeys(repeat("yn",5))|s/\$/\\>\$/gc
   scrolling synchronously:
@@ -50,11 +56,22 @@ regular::
     example:
         /^ *local\+      "matching leading local
 
+Special characters::
+    code of current character,
+        ga  " ascii
+        g8  " utf8
+    enter by code,
+        <C+v> 64    "@
+        <C+v> u64   "d
+        <C+k> <c1><c2>
+        <C+k> 12  " ½
+        @
+    digital graphs,
+        :digraphs  " check codes
+        <C+k> 12   " enter by digital graphs
+        
 Syntastic::
-    disable Syntastic auto check by 
-        :SyntasticToggleMode
-    do no show flake8 quick fix
-        let g:flake8_show_quickfix=0
+    do no show flake8 quick fix let g:flake8_show_quickfix=0
     then recheck by press <F7> or call 
         call flake8#Flake8()
 

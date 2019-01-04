@@ -1,0 +1,25 @@
+Comparison-based sorting::
+     Theory 1 The average number of inversions in an array of n distinct
+numbers is N(N-1)/4.
+     Proof:
+        For any array, L, of numbers, consider Lr, the list in reverse
+    order. The total number of inversion in L and its reverse  Lr is
+    N(N-1)/2. Thus, the average list has half this amount, or N(N-1)/4
+    inversions.
+
+        Theory 1 provides a very strong lower bound about any algorithm that
+    only  exchanges adjacent elements.
+
+    Theory 2 Algorithms that sorts by exchanging two adjacent elements
+requires L(N^2) time on average.
+
+        Theory 2 tell that we should exchange two elements with distance
+    of more than 1 to reduce sorting time.
+
+
+Insertion sorting::
+    
+
+Shell sorting::
+    
+    

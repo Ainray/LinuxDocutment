@@ -1,0 +1,334 @@
+Dialog::
+    Main dialog,
+    
+    class Cshiwen_rae_mfcDlg :public CDialogEx{
+    public:
+        Cshiwen_rae_mfcDlg(CWnd* pParent = NULL);   // 标准构造函数
+    
+        // 对话框数据
+        enum { IDD = IDD_SHIWEN_RAE_MFC_DIALOG };
+        
+        protected:
+        virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+                
+        // 实现
+        protected:
+            HICON m_hIcon;
+            CMenu Menu;
+            // 生成的消息映射函数
+            virtual BOOL OnInitDialog();
+            afx_msg void OnSysCommand(UINT nID,
+            LPARAM lParam);
+            afx_msg void OnPaint();
+            afx_msg HCURSOR OnQueryDragIcon();
+            DECLARE_MESSAGE_MAP()
+        public:
+            afx_msg void OnMenuHelpAbout();
+    };
+    
+    Cshiwen_rae_mfcDlg::Cshiwen_rae_mfcDlg(Cwnd* pParent){
+        m_hIcon=AfxGetApp()->LoadIcon(IDR_MAINFRAME);  //load icon
+    }
+    Cshiwen_rae_mfcDlg::DoDataExchange(CDataExchange* pDx){
+        CDialogEx::DoDataExchange(pDX);
+    }
+    BEGIN_MESSAGE_MAP(Cshiwen_rae_mfcDlg,CDialogEx) //(the class, base class)
+        ON_WM_SYSCOMMAND()
+        ON_WM_PAINT()
+        ON_WM_QUERYDRAGICON()
+        ON_COMMAND(ID_MENUHELPABOUT, &Cshiwen_rae_mfcDlg::OnMenuHelpAbout)
+    END_MESSAGE_MAP()
+    
+    //message dealing function
+    // ......
+    //end of message dealing functionj
+
+    About dialog,
+
+    class CAboutDlg:public CDialogEx{
+        public:
+            CAboutDlg();
+
+            enum{IDD = IDD_ABOUTBOX}; // IDD_ABOUTBOX, resource number
+
+            protected:
+            virtual void DoDataExchange(CDataExchange *pDX);    //DDX/DDV
+
+        protected:
+            DECLARE_MESSAGE_MAP();
+    }
+
+    void CAboutDlg::DoDataExchange(CDataExchange *pDX){
+        CDialogEx::DoDataExchange(pDX);
+    }
+    BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+    END_MESSAGE_MAP()
+
+    Display as modeless dialog,
+
+        CAboutDlg DlgAoubt;
+        DlgAoubt.DoModal();
+
+    Display as modal dialog,
+
+        CAboutDlg* pDlgAbout=new CAboutDlg();
+        pDlgAbout->Create(IDD_ABOUTBOX, this);
+        pDlgAbout->ShowWindow(SW_SHOW);
+
+    // direct use object, the dialog will be disappear after flash
+    // but to avoid memory leakage, you should free the pointer manually
+    // after user push the OK/CANCEL/CLOSE or something else.
+
+    Display in the center,
+        
+        CRect rect, rectDesk;
+        ::GetWindowRect(::GetDesktopWindow(),&rectDesk);
+        GetWindowRect(&rect);
+        int x=(rectDesk.Width()-rect.Width()+1)/2;
+        int y=(rectDesk.Height()-rect.Height()+1)/2;
+
+    // put codes above in OnInitDialog(), before ShowWindow(SW_SHOW);
+
+    Get Dialog pointer or handle,
+        CWnd *pWnd;
+        HWND hWnd;
+
+        // Handle --> pointer
+        pWnd=CWnd::FromHandl(hWnd);
+        pWnd->Attach(hWnd);
+
+        // Pointer --> Handle
+        hWnd=pWnd->GetSafeHanle();
+        Hwnd=pWnd->m_hWnd;
+
+    Initialize dialog:
+
+        virtual BOOL OnInitDialog();
+
+        BOOL CDlg::OnInitDialog(){
+           CDialogEx::OnInitDialog();
+           // initialization follows:
+        }
+
+    Close dialog itself:
+        EndDialog(0);
+
+
+Open file dialog::
+        filter=L"data file(*.dat)|*.dat|| all(*.*)|*.*";
+        CFileDialog openFileDlg(TRUE,NULL,NULL,OFN_OVERWRITEPROMPT,filter,NULL);
+        if(openFileDlg.DoModal()==IDOK){
+            pn=openFileDlg.GetPathName();
+            fn=openFileDlg.GetFileName();
+            if(!pn.IsEmpty()){
+                //Read file
+                MessageBox(L"Success",L"Open file");
+            }
+
+        }
+
+
+Menu::
+    Create your own menu
+        CMenu Menu;
+        Menu.LoadMenuW(IDR_MENU1);
+        SetMenu(&Menu);
+
+    Add message response function(mrf) to menu item,
+        + The class name in the wizard should be parent dialog
+        + mrf, afx_msg void OnMenuHelpAbout()
+        
+
+System menu::
+    Add an item,
+        // check IDM_ABOUTBOX=0x0010 is valid,
+        // IDD_ABOUTBOX 100
+        // IDS_ABOUTBOX 101
+        // All control-menu items have ID numbers > 0xF000(61400)
+        ASSERT((IDM_ABOUT & OxFFF0) == IDM_ABOUTBOX);
+        ASSERT(IDM_ABOUTBOX < OxF000);
+
+        CMenu *pSysMenu=GetSystemMenu(FALSE);
+        if(pSysMenu != NULL){
+            BOOL bNameValid;
+            CString strAboutMenu;
+            bNameValid=strAboutMenu.LoadString(IDS_ABOUTOBOX);
+            ASSERT(bNameValid);
+            if(!strAboutMenu.IsEmpty()){
+                pSysMenu.AppendMenu(MF_SEPARATOR);
+                pSysMenu.AppendMenu(MF_STRING,IDM_ABOUTBOX,strAboutMenu);
+            }
+        }
+
+        
+    
+Toolbar::
+How to display tooltips for a toolbar in a dialog::
+Randy More, 10 Jan 2000
+ 
+  It is relatively easy to place a toolbar in a dialog box, but I had a hard time making 
+the tooltips appear since none of the TTN_xxxx message handlers are present in a CDialog derived class.
+This article describes a simple technique for getting tooltips when you have a toolbar in a dialog.
+It also gives a brief overview of the steps involved in adding a toolbar to a dialog box.
+
+  Step 1
+  In the dialog's header file you must add a CToolBar instance and an entry in the message map to handle the tooltip messages.
+
+        protected:
+            CToolBar cToolBar;
+
+at the bottom of the wizard generated message map entries add:
+
+        //}}AFX_MSG
+        afx_msg BOOL OnToolTipText(UINT nID, NMHDR* pNMHDR, LRESULT* pResult);
+        DECLARE_MESSAGE_MAP()
+  Step 2
+  In dialog's implementation file add the following to the end of OnInitDialog to show the toolbar.
+
+        //add the tool bar to the dialog
+        cToolBar.Create(this);
+        cToolBar.LoadToolBar(IDR_TOOLBAR);
+        cToolBar.ShowWindow(SW_SHOW);
+        cToolBar.SetBarStyle(CBRS_ALIGN_TOP | CBRS_TOOLTIPS | CBRS_FLYBY);
+        RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0);
+
+At the bottom of the message map add the following:
+
+        ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTW, 0, 0xFFFF, OnToolTipText)
+        ON_NOTIFY_EX_RANGE(TTN_NEEDTEXTA, 0, 0xFFFF, OnToolTipText)
+        END_MESSAGE_MAP()
+
+  Finally add the message handler method as entered in the message map:
+
+    BOOL CToolBarTipTestDialog::OnToolTipText(UINT, NMHDR* pNMHDR, LRESULT* pResult)
+    {
+        ASSERT(pNMHDR->code == TTN_NEEDTEXTA || pNMHDR->code == TTN_NEEDTEXTW);
+
+        // if there is a top level routing frame then let it handle the message
+        if (GetRoutingFrame() != NULL) return FALSE;
+
+        // to be thorough we will need to handle UNICODE versions of the message also !!
+        TOOLTIPTEXTA* pTTTA = (TOOLTIPTEXTA*)pNMHDR;
+        TOOLTIPTEXTW* pTTTW = (TOOLTIPTEXTW*)pNMHDR;
+        TCHAR szFullText[512];
+        CString strTipText;
+        UINT nID = pNMHDR->idFrom;
+
+        if (pNMHDR->code == TTN_NEEDTEXTA && (pTTTA->uFlags & TTF_IDISHWND) ||
+            pNMHDR->code == TTN_NEEDTEXTW && (pTTTW->uFlags & TTF_IDISHWND))
+        {
+            // idFrom is actually the HWND of the tool 
+            nID = ::GetDlgCtrlID((HWND)nID);
+        }
+
+        if (nID != 0) // will be zero on a separator
+        {
+            AfxLoadString(nID, szFullText);
+            strTipText=szFullText;
+
+    #ifndef _UNICODE
+            if (pNMHDR->code == TTN_NEEDTEXTA)
+            {
+                lstrcpyn(pTTTA->szText, strTipText, sizeof(pTTTA->szText));
+            }
+            else
+            {
+                _mbstowcsz(pTTTW->szText, strTipText, sizeof(pTTTW->szText));
+            }
+    #else
+            if (pNMHDR->code == TTN_NEEDTEXTA)
+            {
+                _wcstombsz(pTTTA->szText, strTipText,sizeof(pTTTA->szText));
+            }
+            else
+            {
+                lstrcpyn(pTTTW->szText, strTipText, sizeof(pTTTW->szText));
+            }
+    #endif
+
+            *pResult = 0;
+
+            // bring the tooltip window above other popup windows
+            ::SetWindowPos(pNMHDR->hwndFrom, HWND_TOP, 0, 0, 0, 0,
+                SWP_NOACTIVATE|SWP_NOSIZE|SWP_NOMOVE|SWP_NOOWNERZORDER);
+            
+            return TRUE;
+        }
+
+        return FALSE;
+
+string::
+Cstring::
+    Cstring to string,
+
+        Cstring cstr;
+        string str;
+        USES_CONVERSION;
+        str=W2A(cstr);
+
+    string to CString,
+        
+        CString cstr(str.c_str());
+
+    Cstring opeartions,
+        CString myString = _T("This is a test");
+        CString newString = myString; // object is copied
+        CString message = myString + _T("cat")+ newString;
+
+
+    string conversion,
+        char *org="hello, world!";
+        size_t newsize =strlen(orig)+1; // size include '\0'
+        cout<<org<<"(char *)"<<endl;
+
+        //char * --> wchar_t *
+        wchar_t *wcstring =new wchar_t[newsize];
+        size_t convertedChars = 0;
+        mbstowcs_s(&convertedChars,wcstring,newsize,orig,_TRUNCATE);
+        wcout<<wcstring<<_T("(wchar_t *)") <<endl
+
+        // char * --> _bstr_t 
+        _bstr_t bstrt(orig);
+        bstrt+="(_bstr_t)";
+        cout<< bstrt<<endl;
+
+        // char * --> CComBSTR
+        CComBSTR ccombstr(orig);
+        if(ccombstr.Append(_T("(CComBSTR)")) == S_OK){
+            CW2A printstr(ccombstr);
+            cout<<printstr<<endl;
+        }
+
+        // char * --> CstringA
+        CStringA cstringa(orig);
+        cstringa += "(CStringA)";
+        cout<< cstringa<<endl;
+
+        // char * --> CStringW 
+        CStringW cstring(orig);
+        cstring += "(CStringW)";
+        wcout<<(LPCTSTR)cstring<<endl;
+
+        // char * --> string
+        string basicstring(orig);
+        basicstring += "(basic_string)";
+        cout<<bascistring<<endl
+
+        // char * --> System::String
+        String ^systemstring= gcnew String(orig);
+        systemstring += "(System::String)";
+        Console::WriteLine("{0}",systemstring);
+        delete systemstring;
+
+
+
+Message::
+
+    Block SC_CLOSE,
+        
+        if((nID & 0xFFF0) == SC_CLOSE){
+            if(MessageBox("Are you sure to exit program!",
+                "Exit",MB_ICONEXCLAMATION|MB_OKCANCEL|MB_DEFAULT2)==IDOK)
+                PostQuitMessage(0);
+        }
+

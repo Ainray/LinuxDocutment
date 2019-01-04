@@ -1,3 +1,54 @@
+ssh::
+        + remote host as ssh server, local host as client
+
+        + generate key in client
+
+            ssh-keygen -t rsa [ -b 4096] [-p '<passwd>'] -C "Debian"
+
+        + copy public key to server 
+
+            # copy ssh key if shh login to some terminal
+            ssh-copy-id <username>@<host> 
+
+            # when without ssh-copy-id command installed,
+            ssh inray@192.20.16.1 "umask 077; test -d .ssh || mkdir .ssh"
+            cat ~/.ssh/is_rsa.pub | ssh inray@192.20.16.1 "cat >> .ssh/authorized_keys"
+
+            # scp
+            scp .ssh/id_rsa.pub  inray@remote:/home/someone/.ssh/
+
+
+
+        After delivery public key to remote server, test it by 
+
+            ssh inray@192.20.16.1
+
+        or copy a file by
+            
+            touch test.txt
+            scp test.txt inray@192.20.16.1:/tmp/
+
+change key::
+
+        RSA key passphrase change
+            
+            ssh-keygen -p -f ~/.ssh/id_rsa
+
+scp/sftp/rsync without passphrase entering::
+    
+            eval $(ssh-agent) 
+            ssh-add
+
+        + 
+
+file systems::
+        + id_rsa, private key
+        + id_rsa.pub, public key
+    authorized_keys
+    config
+    known_hosts
+
+
 tricks::
     shutdown remote system on ssh:
 
@@ -77,6 +128,8 @@ key::
             
             touch test.txt
             scp test.txt inray@192.20.16.1:/tmp/
+
+change key::
 
         RSA key passphrase change
             

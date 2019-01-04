@@ -14,4 +14,8 @@ concatenate::
 
         printf "file '%s'\n" $(ls VID_20180221_110311.mp4 VID_20180221_111533-2.mp4 VID_20180221_111919.mp4 VID_20180221_112* VID_20180221_113*)
 
+    split into jpegs by
+
+        ffmpeg -i 20176201497924769385_81.mp4  -f image2 image-%07d.png
+
     more refer to: https://trac.ffmpeg.org/wiki/Concatenate

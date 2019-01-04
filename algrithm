@@ -1,0 +1,12 @@
+NOTES:
+    T(n) = O(f(n)) if there are constants c and n₀ such that T(n)≤cf(n) when n ≥ n₀.
+    T(n) = Ω(f(n)) if there are constants c and n₀ such that T(n)≥cf(n) when n ≥ n₀.
+    T(n) = Θ(f(n)) if and only if T(n)=O(f(n)) and T(n)=Ω(f(n))
+    T(n) = o(f(n)) if T(n)=O(p(n)) and T(n) ≠ Θ(p(n))
+
+    O(f(n)) suggests that f(n) is an upper bound
+    Ω(f(n)) suggests that f(n) is a lower bound
+    Θ(f(n)) suggests that f(n) is both lower and upper bound
+    o(f(n)) suggests that f(n) is only a upper bound
+
+    For example, N²=O(N³) or  N³=Ω(N²); N²=θ(2N²)

@@ -175,3 +175,47 @@ sudo iptables -t mangle -A PREROUTING -p icmp --icmp-type echo-request -j LOG --
 sudo iptables -t nat -A PREROUTING -p icmp --icmp-type echo-reply -j LOG --log-prefix "nat PREROUTING echo-request"
 convert freimp_np2_spectrum_500.png -transparent white freimp_np2_spectrum_500_t.png
 fuser -m /mnt/usb
+gnome-session --display $DISPLAY
+nohup /usr/local/MATLAB/R2014b/bin/matlab <MTEMmain.m >run.log &
+convert /mnt/win/thesisreport_m.png -transparent white thesis.png
+sed -i '1~2d' csy_table.dat
+sudo fuser -m /dev/nvme0n1p3
+soffice --headless --invisible --convert-to pdf 张文伟-博士-中国科学院-简历-中文-2018\ -\ 中地装.docx --outdir .
+
+sudo mount -o loop /media/inray/Seagate/OsInstallNecessary/Oses/en_windows_10_enterprise_version_1607_updated_jul_2016_x64_dvd_9054264.iso /mnt/usb
+7zr l /mnt/usb/Archive/20170330-wmy-wemdata.7z
+hexdump -s 20480 -C C143710B.CDF |less
+sudo ntfsfix /dev/sda10
+matlab -nosplash -nodesktop -nojvm
+sudo service --status-all
+sudo systemctl list-unit-files --state=enabled
+ffmpeg -i 20176201497924769385_81.mp4  -f image2 image-%07d.png
+zip -sf MT3Dconference.zip
+enca -L zh prb-20180823.txt
+VBoxManage clonevdi win10/WinXP.vdi /mnt/usb/Virtualbox/virtualwins/WinXP.vid
+rsync -av --info=progress2 /home/inray/win10/Win10.vdi  Win10.vid
+rsync -av --info=progress2 /home/inray/win10/WinXP.vdi WinXP.vid
+VBoxManage clonemedium /home/inray/win10/Win10.vdi /mnt/usb/Virtualbox/virtualwins/Win10.vdi
+netstat -tulpn
+sudo VBoxManage extpack uninstall "`VBoxManage list extpacks |sed -n 2p|cut -d":" -f2|sed "s/^\s*//"`"
+VBoxManage list extpacks
+VBoxManage list usbhost
+VBoxManage startvm Win10
+sudo usermod -a -G vboxusers inray
+VBoxManage extpack install Downloads/Oracle_VM_VirtualBox_Extension_Pack-5.2.14-123301.vbox-extpack
+sudo VBoxManage modifymedium /home/inray/win10/Win10.vdi --resize 81200
+sudo iw dev wlp60s0 interface add wlp60s0_ap type __ap addr 9c:b6:d0:04:12:00
+sudo iw dev wlp60s0 interface add wlp60s0_sta type managed addr 9c:b6:d0:04:12:ff
+echo -e '\u8d25'
+echo "ibase=16;obase=A;F000"|bc
+unzip -l ~/winsda5/Archive/p_f_CSAMT_orgtool_张文伟-20150314-OrgTools.zip
+sudo optirun nvidia-settings -c :8
+sudo pm-suspend
+ssh-keygen -y -f ~/.ssh/id_rsa 
+sudo update-rc.d lightdm defaults
+sudo ifconfig enp59s0 192.20.16.1
+acpitool
+ascii -s "CSA000WSWSWS" |awk {print } |xargs|sed "s/ /,/g"
+sudo update-rc.d -f isc-dhcp-server remove
+sudo tcpdump --list-interfaces
+sudo ntfsfix /dev/sdb5

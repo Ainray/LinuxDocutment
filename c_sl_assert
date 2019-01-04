@@ -1,0 +1,7 @@
+disable::
+    methods,
+        #define NDEBUG /* disable assertions */
+        #include <assert.h>
+    disadvantage,
+            when you want re debug the program, the source file need to
+        be changed and recompiled.

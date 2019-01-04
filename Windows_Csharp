@@ -1,0 +1,160 @@
+Reference across project error "RererfacemangerPackage"::
+
+    gacutil -i Microsoft.VisualStudio.Shell.Interop.11.0.dll
+
+data members::
+data member::
+member::
+data::
+    + data member include field, constants, event;
+    + readonly field can be assigned in constructor, especially
+      instance field allows different values in different instances.
+    + readonly and constants can be pubic safely
+        public readonly unit x; // public is OK
+
+
+constructor::
+    default constructor,
+        + it is suppressed by user-defined one
+            public MyClass()
+            {
+
+            }
+
+    static constructor,
+        + It never is invoked manually, so it has no modifier like
+          private and public
+        + It can only access static member.
+        + it is run at most once
+        + C# usually run it before the member is first invoked
+        + Running sort of multiple static constructors are unknown
+        + Static members with default values are specified before static
+          constructor is executed
+            static MyClass()
+            {
+                
+            }
+
+    constructor initializer,
+        + it is run before constructor
+          class Car
+          {
+              private string d;
+              private unit n;
+              public Car(string d, unit n)
+              {
+                this.d=d;
+                this.n=n;
+              }
+              public Car(string d):this(d,4)
+              {
+
+              }
+          }
+
+initial::
+initialization::
+init::
+    + fields of class or structure will initialized by compiler.
+    + local variable of method must be explicitly initialized.
+
+event::
+    Main related into event include publisher, subscriber, event handler,
+event argument, event handling methods.
+
+    Publisher need to do:
+        + define the event handler (effectively a delegate),
+        + define the event itself (effectively a delegate instance),
+        + raise the event
+
+    Subscriber need to do:
+	+ define the hadling method
+        + subscribe event
+
+    Example:
+    
+    + define event argument
+
+        public class MyEventArgs:EventArgs
+        {
+            private string m_MyEventArgsString = string.Empty;
+
+            public MyEventArgs(string str)
+            {
+                m_MyEventArgsString = str;
+            }
+            public string MyEventArgsString
+            {
+                get{return m_MyEventArgsString;}
+            }
+        }
+
+    + define publisher
+        public class MyEventPublisher
+        {
+            // define event handler
+            public delegate void MyEventHandler(object sender,
+                MyEventArgs e);
+            // define event itself
+            public event MyEventHandler MyEvent;
+
+            // raise the event(effectively call handling method by
+            // the event delegate, same as usual delegate invocation)
+            public void UserRaiseMyEvent()
+            {
+                OnMyEvent();
+            }
+            private void OnMyEvent()
+            {
+                MyEventHandler MyHandle=MyEvent;
+                if(MyHandle!=null)
+                {
+                    MyHandle(this,new MyEventArgs("Test"));
+                }
+
+            }
+        }
+
+
+    + define the subscriber
+        public MyEventSubscriber
+        {
+            // define the event handling method
+            void MyEventMethod(object sender, MyEventArgs e)
+            {
+                Console.WriteLine(sender.ToString()+e.MyEveneArgsString);
+            }
+
+            // publisher object as member
+            MyEventPublisher pub=new MyEventPublisher();
+
+            // subscribe to the event
+            public MyEventSubsriber()
+            {
+                pub.MyEvent+=new MyEventHandler(MyEventMethod);
+            }
+        }
+
+    Now, when MyEventSubscriber is instanced, the member pub (MyEventPublisher)
+is first constructed. In turn, before the pub is constructed, its member
+MyEvent is first created with null object. After MyEventSubscriber is
+constructed, MyEvent is also instanced. 
+    Now if the UserRaiseMyEvent is invoked in somewhere, the event is
+raised. Because the handling method is delegated to the event, it will
+be invoked automatically. In addition, the reference of publisher and
+the event arguments are passed into the handling method.
+    Let's now look into the system event button click. The button(its
+base) is event publisher, it has defined event handler, event, and 
+event raiser.  User only need the event handling method and subscribe it. 
+    For example,
+        private void Button_Click(object sender, EventArgs e)
+        {
+            // do something here
+        }
+     And in the Initilze()(invoked by constructor) of Form including the
+ button, 
+    we subscribe to event by,
+        this.button.click+=Button_Click;
+    Now when we click the button, Windows raised the event and in turn
+the handling method defined by user is invoked. It seems that the
+handling method response to the "click" directly.

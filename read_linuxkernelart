@@ -1,0 +1,34 @@
+Real mode boot::
+    
+    three steps:
+        1. BIOS prepare interrupt vector and service table --->
+        2. load OS into RAM --->
+        3. preparation for main function
+
+        BIOS will construct interrupt vector table in the first 1KB MEM
+    (0x00000~0x003FF), 256-bytes data zone at 0x00400~0x004FF), and load
+    8KB interrupt services at 0x0E2CE, about 56KB after data zone.
+        Every interrupt vector has 4bytes (2 bytes CS, 2 bytes IP). There
+    are 256 interrupt vector, which point to an interrupt service.
+
+    The second step can be divided into three minimal steps:
+        2.1 BIOS int 0x19 load the first sector content BOOTSECT (512bytes)  into
+            0x07C00~0x07DFF.
+
+            BOOTSEC copy itself into 0x90000~0x901FF, then load setup at
+            0x90200~, then load system code between 0x10000~0x3FFFF(192KB).
+
+
+        2.2 BOOTSECT  load following 4 sectors and further following 240
+            sectors into MEM by using int 0x13 ah=0x02
+
+
+        2.3 execute SETUP
+
+    Address space: 2^20=1MB
+
+    BIOS entry: OxFFFF0, example range:0xFE000~0xFFFFF
+        CS=0xFFFF
+        IP=0x0000
+
+
