@@ -142,6 +142,9 @@ lexical::
 
         A python program -> logical lines
         
+line concatenation::
+long line::
+line continuation::
         A logical line ends by NEWLINE token, which maybe contain multiple physical lines ending
     with EOL(LF or CR LF or CR). Explicit line joining uses backslash "\", Expressions in parentheses,
     square brackets or curly braces can be split over more than one physical line without using "\".
@@ -161,6 +164,9 @@ list::
         NOTE: i, j can be negative, relative to the end of s
               for s[i:j], if i is omitted or None, use 0, if j is omitted, or None use len(s), if i>=j, empty
               for s[i:j:k], index x=i+n*k, 0<=n<(j-i)/k, thus x=i,i+k,...,<j always.
+    insert,
+            x=[2,3,4]
+            x.insert(0,1) # return none, x is changed
               
 module::
         A module is a script including definitions of functions as well as executable statements. These
@@ -359,6 +365,18 @@ ipython::
     zoom in and out by
         ctrl+shift+"+", ctrl+"-"
 
-        
+matrix::
+linear::
+linear equation::
+    AT=np.array([1, 1, 1, 1, 1, 1, 1, -3, -2, -1, 0, 1, 2, 3, 9, 4, 1, 0, 1, 4, 9]).reshape(3,7)
+    A=np.transpose(A)
+    ATA=np.matmul(AT,A)
+    b=np.array([4,2,3,0,-1,-2,-5])
+    bt=np.matmul(AT,b)
+    x=np.linalg.solve(ATA,bt)
 
-
+array::
+concatenate::
+    x1 = np.repeat(1,7)
+    x2 = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+    A = np.concatenate([x1,x2])

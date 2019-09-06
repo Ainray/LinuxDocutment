@@ -96,6 +96,7 @@ tty; teletypewriter; also called a teleprinter, an electromagnetic typewriter pa
 tty; text terminal; teleprinter replacement, a serial computer interface for text entry and display
 tty; terminal emulator; teleprinter replacement, a program that emulates a video terminal within some other display architecture.
 udp; user data protocol;
+url; uniform resource locator
 vcs; virtual console screen;
 vesa; video electronics stands association;
 vga; video graphics array; 640*480 resolution

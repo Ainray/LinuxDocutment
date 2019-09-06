@@ -1,0 +1,41 @@
+Windows::
+library::
+shared::
+import library::
+    On Windows, an executable wants to use functions of a DLL it 
+does not link the DLL directly but it's import library.
+    DLL and corresponding import library can be created with MingGW by,
+
+        g++ -c example.cpp -o example.o
+        g++ -shared -o example.dll example.o -Wl,--out-implib,libexample_dll.lib
+        g++ -o main.exe main.o -L. -llibexample_dll
+
+symbols::
+symbol::
+symbol visibility::
+    MinGW is to export all symbols of a DLL. But if one or more functions
+are declared with __declspec(dllexport), only those functions are
+exported.
+    VS is to export NO symbols, just only symbols explicitly declared
+with __declspec(dllexport).
+    
+    For compatibility, we add exampel_exports.h
+--------------------------------------------------------------------------------
+    #ifndef _EXAMPLE_EXPORTS_H_
+    #define _EXAMPLE_EXPORTS_H_
+
+    #ifdef _WIN32
+        #ifdef shared_EXPORTS
+            #define SHARED_EXPORT __declspec(dllexport)
+        #else
+            #define SHARED_EXPORT __declspec(dllimport)
+        #endif
+    #else
+        #define SHARED_EXPORT
+    #endif
+
+    #endif
+--------------------------------------------------------------------------------
+Then compile the source by,
+
+        g++ -Dshared_EXPORTS -c example.cpp -o example.o

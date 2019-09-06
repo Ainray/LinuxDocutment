@@ -1,6 +1,11 @@
 help::
     help set
 
+script::
+replay::
+    script -t 2>~/update-buster0.time -a ~/update-buster0.script
+    scriptreplay update-buster0.time update-buster0.script
+
 debug::
     bash -x script > log
 
@@ -102,3 +107,8 @@ string::
         ${str//apple/APPLE} # replace all occurances
         ${str/#apple/APPLE} # replace str starting with apple
         ${str/%apple/APPLE} # replace str ending with apple
+
+time::
+    measure time of shell commands,
+        time ls -al
+    

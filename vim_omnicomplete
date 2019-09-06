@@ -1,0 +1,8 @@
+install::
+    cd ~/.vim/bundle
+    git clone git@github.com:vim-scripts/OmniCppComplete
+
+tags::
+    mkdir ~/.vim/tags
+
+

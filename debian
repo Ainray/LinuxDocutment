@@ -18,13 +18,27 @@ hardware::
 
         lsblk/lsusb/lsscsi/lspci -nn/lscpu/lshw -short/hwinfo
 
+laptop::
+sleep::
 inhibit power key::
+lid::
+off::
+hibernate::
+suspend::
         man logind.conf
         sudo vim /etc/systemd/logind.conf
         changed into  HandleLidSwitch=ignore
                       HandlePowerKey=ignore(from poweroff)
-        sudo service systemd-logind-service
-    
+
+    Enable/Disable any type of hibernate and suspend
+        sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+        sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target
+    Only prevent suspending when lid closed, 
+        + in /etc/systemd/logind.conf
+            HandleLidSwitch=ignore
+            HandleLidSwitchDocked=ignore
+
+        + sudo service systemd-logind restart
 log::
     boot information,
         sudo tail /var/log/kern.log
@@ -67,7 +81,26 @@ partition::
         (command m for help): +10G
 
     create file system by,
+
         mkfs -v t ext4 /dev/sda10
+
+    Example of fdisk -l
+    ------------------------------------------------------------------------
+        /dev/sda1       2048     204799    202752    99M EFI System
+        /dev/sda2     204800     466943    262144   128M Microsoft reserved
+        /dev/sda3     466944  195778559 195311616  93.1G Linux filesystem
+        /dev/sda4  195778560  254371839  58593280    28G Linux filesystem
+        /dev/sda5  254371840  312965119  58593280    28G Linux filesystem
+        /dev/sda6  312965120  410621951  97656832  46.6G Linux filesystem
+        /dev/sda7  410621952  459450367  48828416  23.3G Linux swap
+        /dev/sda8  459450368  537339903  77889536  37.1G Linux filesystem
+        /dev/sda9  537339904  788998143 251658240   120G Microsoft basic data
+        /dev/sda10 956772352 1953523711 996751360 475.3G Microsoft basic data
+        /dev/sda11 788998144  828059647  39061504  18.6G Linux filesystem
+        /dev/sda12 828059648  829059071    999424   488M Linux filesystem
+        /dev/sda13 829059072  956772351 127713280  60.9G Linux filesystem
+    ------------------------------------------------------------------------
+
 
 resize home::
     $ su
@@ -120,16 +153,30 @@ user::
             # usermod -a -G users inray
 
 upgrade::
-        sudo apt update
-        sudo apt upgrade
-        sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list
-        sudo apt update
-        sudo apt upgrade
-        sudo apt dist-upgrade
-        sudo apt autormove
-        sudo apt clean
-        sudo shutdown -r now
-        lsb_release -a
+        before upgrade
+        ----------------------------
+        + backup system configuration
+            sudo rsync -aR /etc /var/lib/dpkg /var/lib/aptitude/pkgstates /tmp/
+            dpkg --get-selections "*" >/tmp/apt_installtions   # double quotes in "*"  is necessary
+            cd /tmp
+            tar czf strech-20190820.tgz ./etc ./var/lib/ ./apt_installtions 
+
+        + follow update manual
+
+        + backup user configuration and data
+
+        upgrade
+        ---------------------------
+            sudo apt update
+            sudo apt upgrade
+            sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list
+            sudo apt update
+            sudo apt upgrade
+            sudo apt dist-upgrade
+            sudo apt autormove
+            sudo apt clean
+            sudo shutdown -r now
+            lsb_release -a
 
 file permission::
     man umask
@@ -318,4 +365,6 @@ swap::
 
         free -h
 
-
+startx::
+xinitrc::
+    exec xfce4-session

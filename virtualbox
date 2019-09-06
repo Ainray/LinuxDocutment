@@ -25,6 +25,18 @@ networks::
 
         bridged network
             + needed when Virtualbox running servers
+            + in this case, we need,
+                first configure the bridged physical ethnernet in the same network 
+            with the virtualbox server in static mode.
+----------------------------------------------------------------------
+                iface enp59s0 inet static
+                #for bridge
+                    address 192.168.10.2
+                    netmask 255.255.255.0
+                    gateway 192.20.10.1
+----------------------------------------------------------------------
+                then, set opendhcpserver in dhcprange all in the same network of 
+            the server
 
         internal networking
             + visible in virtual machines, but not to outside

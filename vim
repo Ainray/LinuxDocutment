@@ -25,6 +25,10 @@ Tricks::
     :yw
     /<C-R><C-R>"
     :yl
+  search case sensitive
+    /\Cpi
+  search ignore case
+    /\cpi
   one-line multiple replacement
     call feedkeys(repeat("yn",5))|s/\$/\\>\$/gc
   scrolling synchronously:
@@ -36,7 +40,10 @@ Tricks::
       H, make current to full-height at far left
     Ctrl-w t Ctrl-w K (v-h)
       K, make current to full-width at the very top
-     
+   change width and height of current window
+      :res +5 
+      :res -5
+      :vertical resize +5
 
 Spellcheck::
   set spelllang=en
@@ -46,16 +53,14 @@ Spellcheck::
   zg "add misspelled word under cursor to your personal spellfile, maybe ~/.vim/spell/en.utf-8.add
   zG "ignore the misspelled word under cursor for this ssesion
   zw "to mark correctly spelled word under cursor as a misspeeling
-
 regular::
-
+zero::
+count::
     *   any number
     \+  one or more
     \w  [a-zA-z]
-
     example:
         /^ *local\+      "matching leading local
-
 Special characters::
     code of current character,
         ga  " ascii
@@ -74,7 +79,41 @@ Syntastic::
     do no show flake8 quick fix let g:flake8_show_quickfix=0
     then recheck by press <F7> or call 
         call flake8#Flake8()
-
 word separator::
     temporarily allow - as a in word for * check word by,
         set iskeyword=+-
+    yw
+    yl
+     
+help::
+helptags::
+tags::
+    helptags ~/.vim/bundle/vim-latex/doc/
+display::
+list::
+    display line end character "$" and so on
+        set list
+count::
+    characters,
+        :%s/./&//gn  
+    words,
+        :%s/\i\+/&/gn
+    lines,
+        :%s/^//n
+    pattern,
+        :%s/pattern/&/gn  
+    pattern as a word,
+        :%s/\<the\>/&/gn
+quantifier::
+zero::
+more::
+one::
+n::
+    zero or more, as few as possible,
+        \{-}
+    one or more
+        \{-n,m}
+    at least n or more
+        \{-n,}
+    one or at most m
+        \{-,m}

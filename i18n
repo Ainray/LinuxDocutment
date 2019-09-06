@@ -1,3 +1,4 @@
+code::
 check code
 
     enca -L zh prb-20180823.txt
@@ -5,3 +6,30 @@ check code
 line terminator
     
     dos2unix prb-20180823.txt
+
+history::
+    ASCII,
+    OEM characters, code page
+    DBCS, double byte character set (CJK)
+All above define memory bits for any character it can represent.
+    
+    Unicode, code point(saying U+0048)
+Encodings map code point into memory bits.
+    Unicode byte order mark(BOM) for per string, 
+    UCS
+    + FEFF, 
+    + FFFE, the string should be swapped every other byte
+when reading. 
+    UTF-8
+
+BOM::
+byte order marker::
+    utf-8                   efbbbf
+    utf-16(bigedian)        feff 
+    utf-16(little endian)   fffe
+    utf-32(be)              0000feff
+    utf-32(le)              fffe0000
+C locale::
+locale::
+    ISO C library functions use "C" locale.
+    To use environment locale, setlocale(LC_ALL, "")

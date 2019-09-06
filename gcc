@@ -10,3 +10,13 @@ show::
 show linked files::
 
     gcc test.c  -W1,--verbose 2>&1 |less
+    ldd <executable>
+
+shared object::
+dll::
+dynamic::
+library::
+
+    gcc -fPIC --shared -o example.dll example.cpp
+
+

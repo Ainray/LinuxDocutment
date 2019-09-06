@@ -1,0 +1,29 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  vec.h
+ *
+ *    Description:  vector data struct
+ *
+ *        Version:  1.0
+ *        Created:  11/22/2016 10:54:37 PM
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  Fupy Chan (Ainray), wwzhang0421@163.com
+ *   Organization:  IGG, CAS
+ *
+ * =====================================================================================
+ */
+
+#ifndef VEC_H
+#define VEC_H
+template<class T>
+class vec
+{
+	private:
+		:
+}
+
+
+#endif

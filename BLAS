@@ -1,0 +1,9 @@
+BLAS::
+    Basic linear algebra subprogram, providing vector/matrix operations.
+        + Level 1, perform scalar/vector/vector-vector operations
+        + Level 2, perform matrix-vector operations
+        + Level 3, perform matrix-matrix operations
+    BLAS are efficient, portable, and widely available
+
+    
+Thread-safe version

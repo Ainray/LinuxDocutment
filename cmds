@@ -219,3 +219,35 @@ ascii -s "CSA000WSWSWS" |awk {print } |xargs|sed "s/ /,/g"
 sudo update-rc.d -f isc-dhcp-server remove
 sudo tcpdump --list-interfaces
 sudo ntfsfix /dev/sdb5
+sudo lsof -i:21
+isoquery |grep -i china
+sudo htpasswd -c /etc/apache2/.htpasswd "ainray"
+sudo htpasswd  /etc/apache2/.htpasswd  apacheroot
+sudo update-rc.d isc-dhcp-server enable
+sudo userdel -r guest 
+sudo useradd -M -g ftp mjj
+sudo usermod --home /var/ger/mjj mjj
+sudo useradd vsftp -s /sbin/nologin
+sudo gpasswd -d inray ftp
+sudo usermod -g ftp vsftp 
+sudo groupdel vsftp
+sudo db5.3_load -T -t hash -f vsftpd_viruserlist vsftpd_viruserlist.db
+vlc v4l2:// /dev/video0
+xfce4-screenshooter -r
+xfce4-screenshooter -r
+eval "$(/opt/minconda3/bin/conda shell.bash hook)"
+awk '!seen[$0]++' ~/.note/vim
+sudo mkfs.fat -F32 /dev/sdb1
+sudo mount /dev/sdb4  /mnt/usb -o rw,user=inray
+sudo mkfs -V -t ext4 /dev/sdb4
+awk '{printf("%s",$0)}' /tmp/1 |awk -F"\"" '{for(i=2;i<=120;i=i+2){for(j=1;j<=13;++j){printf("%60s\t%s", $(i+(j-1)*122),j==13?"\n":"")}}}' >/tmp/2 
+nm -gC LIBBLAS.DLL
+jpegoptim --size=19k Ainray_QZ_dll_scale114x156.jpg
+grep install /var/log/apt/history.log
+echo "www.wikipedia.org" |proxy
+convert -resize 114x156! Ainray_Lang_jobpic.jpg Ainray_Lang_jobpic_114x156.jpg
+sed 's/[A-Z]/\l&/g'
+sed 's/[A-Z]/\u&/g'
+seq 65 65 1365
+xxd test-20190712-fit/test_realdata.txt
+sudo dpkg --audit

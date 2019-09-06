@@ -1,0 +1,38 @@
+help::
+example::
+    Where is example folder?
+            install-path\Examples\
+        In my case, it is in
+            C:\Program Files (x86)\Steema Software\Steema TeeChart Pro VCL FMX 2019.27\Examples
+    Website:
+        steema.com/support/.../tutorial, FAQ, Forum, reference
+        http://www.teechart.net/docs/TeeChartVCLTutorials.htm
+        www.steema.com/support/index.php
+
+Demos::
+        Tee9New_win64Delphi26.exe
+
+tutorial::
+data::
+XYZ::
+adddata::
+series::
+        TeeChartVCLTuroials, tutorial, 6. Working with Series
+
+colors::
+series color::
+point color::
+        Series1.ValueColor[0] = clBlue;
+
+point label::
+label::
+xlabel::
+        Series1.XLabel[0]
+        
+Properties::
+        Series1.ClickableLine=False
+        Series1.
+
+
+    
+

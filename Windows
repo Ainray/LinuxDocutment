@@ -1,0 +1,16 @@
+Win10 close Windows Defender
+
+    + regedit
+    + HKEY_LOCAL_MACHINE \ SOFTWARE \ Policies \ Microsoft \
+      Windows Defender
+    + Create a new DWORD(32 bit) key value with name of
+      "DisableAntiSpyware", value of 1
+
+memory capacity::
+memory::
+    wmic memphysical get maxcapacity
+
+encoding::
+active page::
+code page::
+    chcp // run in cmd window

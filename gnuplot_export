@@ -1,0 +1,9 @@
+plot exp(-x**2) # some plot command
+set terminal png # select the file format
+set output "1.png" # specify the output filename
+replot # repeat the most recent plot command,
+# with the output now going to the
+# specified file.
+set terminal x11 # restore the terminal settings
+set output # send output to the screen again,
+# by using an empty filename."")

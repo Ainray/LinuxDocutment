@@ -67,3 +67,110 @@ synchronization::
     synchronization by rsync,
 
         rsync -av info=progress2 /mnt/usb/DCIM/Camera/ .
+vsftp::
+server::
+    + make file system
+      mkdir /var/ger
+      cd /var/ger/
+      mkdir ger heli mjj zww
+
+    + create host user for vsftp virtual users
+      groupadd ger
+      useradd ger -g ger -d /var/ger -s /sbin/nologin
+      chown ger:ger -R /var/ger
+      chmod 770 -R /var/ger
+
+    + configure vsftp
+       
+        # Example config file /etc/vsftpd.conf
+            listen=NO
+            listen_ipv6=YES
+            anonymous_enable=NO
+        # espcially for local host user of virtual users
+            local_enable=YES
+            local_umask=007
+            dirmessage_enable=YES
+            use_localtime=YES
+            xferlog_enable=YES
+            connect_from_port_20=YES
+            ftpd_banner=Welcome to GER FTP server. Any problem, email to wwzhang0421@163.com
+            secure_chroot_dir=/var/run/vsftpd/empty
+            pam_service_name=vsftpd
+            rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+            rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+            ssl_enable=NO
+            utf8_filesystem=YES
+-------------------------------------------------------------------------
+            chroot_local_user=YES
+            chroot_list_enable=NO
+
+    Be careful here, it is dangerous.
+      case 1, usually it is you want
+        chroot_local_user=YES, all limited
+        chroot_list_enable=YES, list in chroot_list_file has no limit
+        
+      case 2, in some sense, safe
+        chroot_local_user=YES, all limited
+        chroot_list_enable=NO, no excluded
+
+      case 3, usually not you want
+        chroot_local_user=NO, no limited
+        chroot_list_enable=YES, list in chroot_list_file  is limited
+
+      case 4, dangerous
+        chroot_local_user=NO, no limited
+        chroot_list_enable=No, no excluded
+-------------------------------------------------------------------------
+            userlist_enable=YES
+            userlist_file=/etc/vsftpd.userlist
+            userlist_deny=NO
+            tcp_wrappers=YES
+
+            # virtual user allowed
+            guest_enable=YES
+            guest_username=ger
+            virtual_use_local_privs=YES
+            allow_writeable_chroot=YES
+            user_config_dir=/etc/vsftpd.conf.d
+                
+        # /etc/vsftpd.userlist
+            ger
+            heli
+            mjj
+
+        # directory /etc/vsftpd.conf.d
+            ger
+            heli
+            mjj
+        # example virtual configuration
+             
+            local_root=/opt/vsftp/virtuser
+            anonymous_enable=NO
+            write_enable=YES
+            local_umask=007
+            anon_upload_enable=NO
+            anon_mkdir_write_enable=NO
+            idle_session_timeout=600
+            data_connection_timeout=300
+            # number of parallel clients
+            max_clients=10
+            # number of threads per client 
+            max_per_ip=5
+            # rate limit b/s
+            local_max_rate=50000
+
+    + virtual account password management
+        # /etc/vsftpd_viruserlist
+            ger
+            123
+            heli
+            123
+            mjj
+            123
+        # database
+            sudo db5.3_load -T -t hash -f vsftpd_viruserlist vsftpd_viruserlist.db
+        # authorization 
+            auth	required	/lib/x86_64-linux-gnu/security/pam_userdb.so db=/etc/vsftpd_viruserlist
+            account	required	/lib/x86_64-linux-gnu/security/pam_userdb.so db=/etc/vsftpd_viruserlist
+   + restart vsftp
+        sudo service vsftp restart

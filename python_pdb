@@ -26,3 +26,11 @@ Start::
         Help is run by
             (Pdb) h
 
+commands::
+debug::
+pdb::
+            (pdb) b     #list breaks
+            (pdb) b 74  #set breakpoint in 74
+            (pdb) cl 
+                  y     # clear all breakpoints
+            (pbd) c     # restart program

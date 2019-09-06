@@ -1,0 +1,44 @@
+url::
+   + protocol, e.g. http
+   + servername, e.g. www.apache.org
+   + path, e.g. /docs/current/getting-started.html
+   + query string, optional, to pass additional arguments, e.g. ?arg=value
+
+dns::
+   map servername into ip,
+   local resolution, /etc/hosts or c:\Windows\system32\drivers\etc\hosts
+
+modules::
+    
+        sudo apache2 -l
+
+configuration::
+
+    basic configuration, enabled by 'a2ensite 010-ger-rd.conf; systemtcl reload apache2'
+
+        010-ger-rd.conf
+
+            ServerAdmin wwwzhang0421@163.com
+            #DocumentRoot /var/www/html
+            DocumentRoot /var/ger
+
+        ../apache2.conf
+
+            <Directory /var/ger/>
+                    Options Indexes
+                    AllowOverride None
+                    Require all granted
+            </Directory>
+
+    username and passwd,
+
+        010-ger-rd.conf
+            <Directory "/var/ger/张文伟">
+                AuthType Basic
+                AuthName "张文伟"
+                AuthUserFile "/etc/apache2/.htpasswd"
+                Require valid-user
+            </Directory>
+
+        ../apache2.conf
+            Require valid-user

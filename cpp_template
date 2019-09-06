@@ -1,0 +1,3 @@
+PIMPL::
+        Design pattern to hide complexities of a template implementation from
+    the user or application developer.
