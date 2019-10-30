@@ -1,4 +1,4 @@
-3 way handshake::
+To start a connection, client and server must do the 3 way handshake::
        ---------              SYN               ---------
        | host  |  ----------------------------> | server| 
        ---------                                ---------
@@ -9,6 +9,6 @@
        | host  |  ----------------------------> | server| 
        ---------                                ---------
     
-    SYN, synchronize
-    ACK, acknowledgement
+    SYN, synchronize flag
+    ACK, acknowledgement flag
 
