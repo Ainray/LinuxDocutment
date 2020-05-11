@@ -1,0 +1,478 @@
+Help::
+reference::
+    https://docs.microsoft.com/zh-cn/windows/win32/gdi/windows-gdi
+    https://www.tenouk.com/mfcprojectdownload.html
+    mfc_tutorial_Tenouk.pdf
+
+Device context::
+    Structure that defines a set of graphic objects and their associated
+attributes, and graphic modes that affect output.
+    
+
+GDI objects::
+    Bitmap
+    Brushes
+    Fonts
+    Logical Palette
+    Paths
+    Pens
+    Regions
+
+GDI primitives::
+refer::Petzold - 1998 - Programming Windows.chm, Ch5
+    lines
+    rectangles
+    ellipses (including circles)
+    arcs
+    bezier spline
+    fill
+    bitmap
+    text
+
+GDI (other) stuff::
+    mapping modes
+    transforms
+    metafiles
+    regions
+    paths
+    clipping
+    palette
+    print
+
+Bitmap::
+    https://docs.microsoft.com/zh-cn/windows/win32/gdi/about-bitmaps
+    Petzold - 1998 - Programming Windows.chm, Ch14, ch15
+
+Bitmap classifications::
+    classifications 1, 
+        + DIB, device independent bitmaps
+        + DDB, device dependent bitmaps, also knowns as GDI bitmaps
+    classifications 2,
+        + monochrome
+            for example, mouse cousor
+        + gray
+        + color
+
+Bitmap resolution::
+    The spatial dimensions of a bitmap are often referred to as its
+resolution.
+    Although, the resolution is also used to refer to as the number of
+pixels per metrical unit.
+
+Bitmap color dimension::
+color depth::
+bit-count::
+bpp:
+bilevel::
+bicolor::
+monochrome::
+    Color dimension is the number of bits for each pixel and is sometimes
+called the color depth, or bit-count, or bpp.
+    A bitmap with 1 bpp is called bilevel or bicolor or monochrome bitmap.
+A value of 0 could means black, and a 1 could mean white.
+
+Video adapters history::
+IRGB::
+intensity-read-green-blue
+    + CGA, IBM color graphics adapter (monochrome in Windows)
+    + HGC, Hercules graphics card (monochrome)
+    + EGA, enhanced graphics adapter (16-colors from a 64-color palette)
+            16 colors were black, white, two shades of gray, dark and light
+        versions of red, green, and blue, cyan (combination of blue and green),
+        magenta (combination of blue and red), yellow (combination of red and green)
+            The color encoding used in 16-color bitmaps is sometimes called
+        IRGB (intensity-red-green-blue)
+            IRGB color bits used for each pixel map to Windows hexadecimal
+        RGB colors as shown in the following table.
+        ------------------------------------------------------------------
+        IRGB    RGB color   color name
+        ------------------------------------------------------------------
+        0000    00-00-00    Black
+        0001    00-00-80    Dark Blue
+        0010    00-80-00    Dark Green
+        0011    00-80-80    Dark Cyan
+        0100    80-00-00    Dark Red
+        0101    80-00-80    Dark magenta
+        0110    80-80-00    Dark yellow
+        0111    C0-C0-C0    Light Gray
+        1000    80-80-80    Dark Gray
+        1001    00-00-FF    Blue
+        1010    00-FF-00    Green
+        1011    00-FF-FF    Cyan
+        1100    FF-00-00    Red
+        1101    FF-00-FF    Magenta
+        1110    FF-FF-00    Yellow
+        1111    FF-FF-FF    White
+        ------------------------------------------------------------------
+            EGA is organized in four "color planes", which means that the 
+        four bits that define the color of each pixel are consecutive in 
+        memory.
+
+    + VGA, video graphics array (640x480 with 16 colors in Windows)
+    + SVGA, super-VGA (256 color and more in the 640x480 mode)
+    + high color (32768-color or 65536 color with 6-bit green)
+    + true color (2^24, millions of colors)
+
+        -------------------------------------------------------------------
+        BITSPIXEL       PLANES      Number of colors
+        -------------------------------------------------------------------
+        1               1           2
+        1               4           16
+        8               1           256
+        15 or 16        1           32768 or 65536
+        24 or 32        1           16 777 216
+        -------------------------------------------------------------------
+
+Bitmap DDB::
+Bitmap BITMAP::
+        Device dependent bitmaps, is described by using a single structure, the BITMAP structure.
+    DDB is often called a compatible bitmap.
+
+    typedef struct tagBITMAP {
+        LONG   bmType;
+        LONG   bmWidth;
+        LONG   bmHeight;
+        LONG   bmWidthBytes;
+        WORD   bmPlanes;
+        WORD   bmBitsPixel;
+        LPVOID bmBits;
+    } BITMAP, *PBITMAP, *NPBITMAP, *LPBITMAP;
+
+Bitmap Discardable::
+        A discardable DDB is a bitmap that the system discards if the bitmap
+    is not selected into a DC and if the system memory is slow.
+        CreateDiscardablBitmap creates discardable bitmaps.
+        CreateBitmap, CreateCompatibleBitmap, CreateBitmapIndirect create nondiscardable bitmaps.
+
+Bitmap bit-block transfer::
+    + BitBlt
+        BitBlt(hdcDst, xDst, yDst, cx, cy, hdcSrc, xSrc, ySrc, dwROP)
+        The source and destination DC must be compatible. If the source
+    and destination DC are the same, or then device context use MM_TEXT
+    mapping mode, Windows can do a simple pixel-pixel transfer. However,
+    then the size in device units is different in the two DCs, Windows
+    turns the job over to the more versatile StretchBlt function.
+
+    + StretchBlt(hdcDst, xDst, yDst, cxDst, cyDst, hdcSrc, xSrc, ySrc, cxSrc, cySrc, dwROP)
+
+StretchBlt Mode::
+
+        SteStretchBltMode(hdc, iMode)
+
+    + BLACKONWHITE or STRETCH_ANDSCANS
+        for monochrome with black against white background
+    + WHITEONBLACK or STRETCH_ORSCANS
+        for monochrome with white against black background
+    + COLORONCOLOR or STRETCH_DELETESCANS
+        for color bitmap
+    + HALFTONE or STRETCH_HALFSTONE
+
+Raster operations::
+        BitBlt and StretchBlt actually perform a bitwise operation between the following 
+    three images:
+        + source bitmap, stretched or compressed (if necessary) to be the same size as the 
+    destination rectangle.
+        + destination rectangle
+        + pattern, the current brush selected into the destination device
+        context, repeat horizontally and vertically to the same size as the 
+        destination rectangle.
+
+        15 ROP codes that have names
+        -------------------------------------------------------------------------------------
+        Pattern (P)         11110000
+        Source (S)          11001100
+        Destination (D)     10101010    Boolean operation   ROP Code    Rop Name
+        -------------------------------------------------------------------------------------
+        Result              00000000    0                   0x000042    BLACKNESS
+                            00010001    ~(S|D)              0x1100A6    NOTSRCERASE
+                            00110011    ~S                  0x330008    NOTSRCCOPY
+                            01000100    S & ~D              0x440328    SRCERASE
+                            01010101    ~D                  0x550009    DSTINVERT
+                            01011010    P ^ D               0x5A0049    PATINVERT
+                            01100110    S ^ D               0x660046    SRCINVERT
+                            10001000    S & D               0x8800C6    SRCAND
+                            10111011    ~S ¦ D              0xBB0226    MERGEPAINT
+                            11000000    P & S               0xC000CA    MERGECOPY
+                            11001100    S                   0xCC0020    SRCCOPY
+                            11101110    S ¦ D               0xEE0086    SRCPAINT
+                            11110000    P                   0xF00021    PATCOPY
+                            11111011    P ¦ ~S ¦ D          0xFB0A09    PATPAINT
+                            11111111    1                   0xFF0062    WHITENESS
+        -------------------------------------------------------------------------------------
+
+Pattern Blt::
+    PatBlt perform ROP over pattern and destination, so only those ROP that do not
+involve a source device context.
+        PatBlt(hdc, x, y, cx, cy, dwROP);
+    For example, 
+        PatBlt(hdc, x, y, cx, cy, BLACKNESS);
+        PatBlt(hdc, x, y, cx, cy, WHITENESS);
+        PatBlt(hdc, x, y, cx, cy, DSTINVERT);
+        PatBlt(hdc, x, y, cx, cy, PATINVERT);
+
+        FillRect(hdc, &rect, hBrush);
+    is equivalent to:
+        hBrush = SelectObject(hdc, hBrush);
+        SelectObject(hdc, hBrush);
+        PatBlt(hdc, rect.left, rect.top, rect.right-rect.left,
+            rect.bottom-rect.top, PATCOPY);
+    and 
+        InvertRect(hdc, &rectA;)
+    is translated into by Windows:
+        PatBlt(hdc, rect.left, rect.top, rect.right-rect.left,
+            rect.bottom-rect.top, DSTINVERT);
+
+DDB::
+GDI bitmap object::
+
+    GDI objects, 
+
+        + HBITMAP hBitmap;
+        + BITMAP bitmap;
+
+    Bitmap is created by, 
+    method 1, 
+
+        +   hBitmap = CreateBitmap(cx, cy, 1, 1, bits);
+            hBitmap = CreateBitmap(cx, cy, PLANES, BITSPIXEL, bits);
+
+    method 2, 
+
+        +   hBitmap = CreateCompatibleBitmap(hdc, cx, cy);
+            bBitmap = CreateDiscardablBitmap(hdc, cx, cy); 
+
+    method 3, 
+
+        +   hBitmap = CreateBitmapIndirect(&bitmap);
+
+    method 4, load from resource file
+        +   hBitmap = LoadBitmap(hInstance, szBitmapName);
+    or for system bitmap by,
+        +   hBitmap = LoadBitmap(NULL, szBitmapName); 
+        +   hBitmap = LoadBitmap(NULL, MAKEINTRESOURCE)
+
+
+    For exmaple, 
+        HBITMAP hBitmap;
+        ...
+        hBitmap = CreateBitmap(cx, cy, cPlanes, cBitsPixel, bits);
+    or 
+        hBitmap = CreateBitmap(cx, cy, cPlanes, cBitsPixel, NULL); 
+    where bits will be set later. In reality, CreateBitmap will be called
+    with only two types of arguments for the third and fourth:
+        hBitmap = CreateBitmap(cx, cy, 1, 1, bits);
+        hBitmap = CreateBitmap(cx, cy, PLANES, BITSPIXEL, bits);
+    where PLANES and BITSPIXEL are obtained by GetDeviceCaps;
+        ...
+        DeleteBitmap(hBitmap);
+
+        In a much "realer" reality, you will call CreateBitmap only for
+    the first case. For the second case, you can simplify things using
+        hBitmap = CreateCompatibleBitmap(hdc, cx, cy);
+        bBitmap = CreateDiscardablBitmap(hdc, cx, cy); 
+    is similar to CreateCompatibleBitmap except that Windows will discard
+    the bitmap from memory if memory got low (I think nowdays it make no
+    sense anyway in most case).
+
+        BITMAP bitmap;
+        hBitmap = CreateBitmapIndirect(&bitmap);
+
+    Set bitimap bits by,
+        SetBitmapBits(hBitmap, cBytes, &bits);
+        GetBitmapBits(hBitmap, cBytes, &bits);
+        
+memory device context::
+
+        create by,
+            HDC hdcMem = CreateCompatibleDC(hdc);
+        select a GDI bitmaps by,
+            SelectObject(hdcMem, hBitmap);
+DIB::
+OS/2-Style DIB::
+    A DIB file has four main sections:
+        + a file header
+        + an information header
+        + an RGB color table (but not always)
+        + the bitmap pixel bits
+    A memory-based DIB in the packed-DIB format has three sections:
+        + an information header
+        + an RGB color table (but not always)
+        + the bitmap pixel bits
+
+DIB coordinate::
+refer::Petzold - 1998 - Programming Windows.chm, Ch15
+SetDIBitsToDevice::
+        SetDIBitsToDevice(hdc, xDst, yDst, cxSrc, cySrc, xSrc, ySrc, yScan,
+            cyScans, pBits, pInfo, fClrUse);
+
+        If the the biHeight field of the BITMAPINFOHEADER struct is negative, the DIB
+    is top-down.
+
+        So, in DIBs, the bottom row of the image is the first row of the
+    file, and the top row of the image is the last row in the file. This
+    is called a bottom-up organization.
+
+        The origin of a bottom-up DIB is the bottom left corner of the bitmap
+    image, which is the first pixel of the first row of bitmap data. The
+    origin of a top-down DIB is also the bottom left corner of the bitmap
+    image, but in this case the bottom left corner is the first pixel of
+    the last row of bitmap data.
+        However, pixel bits is arranged from first line to last line, bottom to up for
+    bottom-up bitmap, top-bottom for top-down button.
+
+    pixel bits   ------------------------------    ------------------------------
+    scan line 0  |(xSrc, ySrc) --->bottom     |    |(xSrc, ySrc+cySrc-1) --->top|
+    scan line 1  |                            |    |                            |
+    scan line 2  |                            |    |                            |
+                 |                            |    |                            |
+        ....     |                            |    |                            |
+                 |   normal (bottom-up DIB)   |    |        top-down  DIB       |
+                 |                            |    |                            |
+                 |                            |    |                            |
+                 |                            |    |                            |
+                 |                            |    |                            |
+                 |                            |    |                            |
+                 |(xSrc, ySrc+cySrc-1) -->top |    |(xSrc, ySrc)   ----->bottom |
+                 ------------------------------    ------------------------------
+
+        SetDIBitsToDevice(hdc, 0, 0, cxDib, cyDib, 0, 0, 0, cyDib, pBits, pInfo, fClrUse);
+    
+Palette::
+    24-bit color also known as true color, or millions of colors
+    16-bit color also known as high color, or thousands of colors
+    8-bit color, 256-colors
+
+scan line::
+        A scan line is a single row of adjacent pixels on a video display
+    indexed from up to bottom starting with 0.
+        scan line 0 ........................
+        scan line 1 ........................
+        ...
+        scan line n ........................
+
+physical graphics device::
+    + raster device
+            for example, video display adapters, dot-matrix printers, and laser printers
+        ink-jet printers
+    + vector device
+        plotter
+
+API::
+    int GetObject( int nCount, LPVOID lpObject) const;
+
+General::
+    A GDI bitmap is simply another GDI object, such as a pen or a font.
+    How to display or print a bitmap:
+        + create a bitmap
+        + select it into the device context
+            a memory device context is needed to do it.
+        + deselect and delete it
+    
+create::
+    method 1, load from resources
+        + create bitmap resource file by "resource editor", convert other 
+    format pictures is also allowed.
+        "resource compiler" will reads the DIB from disk and stores it
+    in the projects's RES file.
+        "linker" copies the DIB into EXE file
+        + load it in CMyview::OnDraw(CDC *pDC) by LoadBitmap
+            CMyView::OnDraw(CDC *pDC)
+            {
+                CBitmap bitmap;
+                btimap.LoadBitmap(IDB_BMDIRD);
+            }
+device context::
+    method 1, directly get from OnDraw funtion
+    method 2, create from client
+        CMyView::OnInitialUpdate()
+        {
+            CClientDC dc(this);
+            OnPrepareDC(&dc);
+            dc.DPtoLP(&sizeDest);
+        }
+
+
+memory device context::
+            CDC dcMemory;
+            dcMemory.CreateCompatibleDC(pDC);
+        
+select bitmap::
+            dcMemory.SelectObject(&bitmap);
+copy::    
+size::
+    + hard coded,
+        CSize(54, 96);
+    + dynamically
+        BITMAP bm;
+        bitmap.GetObject(sizeof(bm), &bm);
+        CSize sizeSrc;
+        sizeSrc.cx = bm.bmWidth;
+        sizeSrc.cy = bm.bmHeight;
+        sizeDest = sizeSrc;
+        
+display Mode::
+    + MM_TEXT
+            CMyView::OnDraw(CDC *pDC)
+            {
+                pDC->BitBlt(100, 100, 54, 96, &dcMemory, 0, 0, SRCCOPY);
+            }
+    + MM_LOENGLISH
+            if bitmap display mapping mode is not MM_TEXT and we want it to occupy a 54x96 rectangle, 
+                CSize size(54, 96);
+                pDC->DPtoLP(&size);
+                pDC->SetStretchBltMode(COLORONCLOR);
+                pDC->StretchBlt(0, 0, size.cx, -size.cy, &dcMemory, 0, 0. 54, 96, SRCCOPY);
+            If GDI really strech or compress bits, the display update is slow
+
+As a whole::
+    Example 1:
+            CMyView::OnDraw(CDC *pDC)
+            {
+                CBitmap bitmap;
+                CDC dcMemory;
+                bitmap.LoadBitmap(IDB_BMBIRD);  //convert resource-based DIB to a GDI bitmap
+                dcMemory.CreateCompatibleDC(pDC); //create memory device context compatible with specifed device
+                dcMemory.SelectObject(&bitmap);   //select an object into device context
+                pDC->BitBlt(100, 100, 54, 96, &dcMemory, 0, 0, SRCCOPY);
+                // (100, 100) to upper-left of display
+                // CDC destructor deletes dcMemory
+                // CBitmap destructor delete bitmap when bitmap is deselected
+            }
+
+    Example 2:
+        
+    CMyView::OnInitialUpdate()
+    {
+        CClientDC dc(this)
+        OnPrepareDC(&dc);
+        
+        ...
+        dcMemory.CreateCompatibleDC(&dc);
+        ...
+        // get size of bitmap
+        bitmap.GetObject(sizeof(bm), &bm);
+        ...
+        sizeDest = sizeSrc;
+        dc.DPtoLP(&sizeDest);
+    }
+
+flicker::
+MyMFC26B::
+    CMyView::OnInitialUpdate()
+    {
+        CScrollView::OnInitialUpdate();
+        CSize sizeTotal(800, 1050);
+        CSize sizePage(sizeTotal.cx/2, sizeTotal.cy/2);
+        CSize sizeLine(sizeTotal.cx/50, sizeTotal.cy/50);
+        SetScrollSizes(MM_LOENGLISH, sizeTotal, sizePage, sizeLine);
+        if(dcMemory.GetSafeHdc() == NULL)
+        {
+            CClientDC dc(this);
+            OnPrepareDC(&dc);
+            CRect rectMax(0, 0, sizeTotal.cx, -sizeTotal.cy);
+            dc.LPtoDP(rectMax);
+            dcMemory.CreateCompatibleDC(&dc);
+            bitmap->CreateCompatibleBitmap(&dc, rectMax.right, rectMax.bottom);
+            dcMemory->SetMapMode(MM_LOENGLISH);
+        }
+    }

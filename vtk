@@ -2,6 +2,7 @@ help::
     https://www2.cs.uic.edu/~jbell/CS526/Tutorial/Sources.html
     https://gitlab.kitware.com/vtk/vtk/tree/master/Examples
     https://gitlab.kitware.com/vtk/vtk/tree/master/Examples/Tutorial
+    https://www.aosabook.org/en/vtk.html
 
 tutorial::
     + basic pipeline,

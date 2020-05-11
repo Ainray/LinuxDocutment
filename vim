@@ -117,3 +117,33 @@ n::
         \{-n,}
     one or at most m
         \{-,m}
+
+plugin::
+taglist:: source code brower
+    + dependence on ctags, install it by 
+        sudo apt-get install exuberant-ctags
+    + dependence on file type in .vimrc
+        filetype on
+    + vimrc general tags configuration
+        set tags+=~/.vim/tags/cpp
+        set tags+=~/.vim/tags/gl
+        set tags+=~/.vim/tags/linuxheader
+        set tags+=./.tags
+    + vimrc configration
+        let Tlist_Auto_Open = 1
+        let Tlist_Auto_Update = 1
+        let Tlist_Close_On_Select = 1
+        let Tlist_Compact_Format = 1
+        let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'  "only necessary if it is not included in PATH
+        let Tlist_Display_Prototype = 1
+        let Tlist_Exist_OnlyWindow = 1
+        let Tlist_File_Fold_Auto_Close = 1
+    + commands
+        :TlistOpen
+        :TlistToggle
+
+    + current tag, type P on current tag
+    
+    + toggle, in normal 
+        map <silent> <F10> :TlistToggle<CR>
+

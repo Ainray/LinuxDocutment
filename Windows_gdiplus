@@ -1,0 +1,117 @@
+Help::
+refer::
+    https://docs.microsoft.com/en-us/windows/win32/gdiplus/-gdiplus-gdi-start
+
+Introduction::
+    usage,
+        using namespace Gdiplus;
+        GdiplusStartupInput gdiplusStartupInput;
+        ULONG_PTR           gdiplusToken;
+        GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+        ...
+        GdiplusShutdown(gdiplusToken);
+
+    features,
+        + gradient brushes
+        + cardinal spline
+        + independent Path Objects
+        + matrix
+        + scalable region
+        + alpha blend
+
+Coordinate::
+
+    + world
+    + page
+        always has its origin at upper-left corner of the client area
+    + device
+        
+        The transformation that maps world coordinates to page
+    coordinates is call world transformation and is maintained by a
+    Graphics object.
+        The transformation that maps page coordinate to device
+    coordinates is called the page transformation.
+
+        For example, using myGraphics.DrawLine(&myPen, 0, 0, 80, 160)
+    draw a line starting from the center of the display. Then the
+    coordinate of the endpoints of your line in the three coordinate
+    spaces are as follows:
+
+    --------------------------------------------------------------------------------
+    coordinate          endpoints coordinate
+    --------------------------------------------------------------------------------
+    world               (0, 0) to (80, 160)
+    page                (100, 50) to (180, 210)
+    device              (100, 50) to (180, 210)
+    --------------------------------------------------------------------------------
+
+        -----------------------------------------------------------
+        |                                                         |
+        |                                                         |
+        |                                                         |
+        |                                                         |
+        |                                                         |
+        |                                                         |
+        |                                                         |
+        |                   ------------------->                  |
+        |                   | \                                   |
+        |                   |  \                                  |
+        |                   |   \                                 |
+        |                   |    \                                |
+        |                   |     \                               |
+        |                   |      \                              |
+        |                   |       \                             |
+        |                   |        \                            |
+        |                   v         \                           |
+        |                                                         |
+        |                                                         |
+        |                                                         |
+        -----------------------------------------------------------
+
+        This is implemented in GDI+ by
+            
+            myGraphics.TranslateTransform(100.0f, 50.0f); 
+            myGraphics.DrawLine(&mypen, 0, 0, 160, 80);
+
+        For example, draws a line from (0, 0) to (2, 1) where the point
+    (2, 1) is 2 inches to the right and 1ch down from the point (0, 0).
+            myGraphics.SetPagetUnit(UnitInch);
+            myGraphics.DrawLine(&myPen, 0, 0, 2, 1);
+        In default, the pen width will be 1 inch, you can specify the pen
+    width by 
+            Pen myPen(color(255, 0, 0, 0), 1/myGraphics.GetDpiX())
+        If we assume that 96 dpi both in the horizontal and vertical directions, 
+    then the endpoints in the three coordinate spaces are:
+    --------------------------------------------------------------------------------
+    world               (0, 0) to (1, 2)
+    page                (0, 0) to (1, 2)
+    device              (0, 0) to (96, 192)
+    --------------------------------------------------------------------------------
+        You can combine world and page transformations to achieve a variety of effects.
+    For example, you want the origin to be 2 inches from the left edge of
+    the client area and 1/2 inch from the top of the client area, and
+    draw a line from (0, 0) to (1, 2):
+            myGraphics.TranslateTransform(2.0f, 0.5f);
+            myGraphics.SetPageUnit(UnitInch);
+            myGraphics.DrawLine(0, 0,1, 1);
+
+        In this case, the endpoints in the three coordinate spaces are:
+    --------------------------------------------------------------------------------
+    world               (0, 0) to (1, 2)
+    page                (2.0, 0.5) to (3, 2.5)
+    device              (192, 48) to (288, 240)
+    --------------------------------------------------------------------------------
+
+Graphics container::
+    Temporarily change configuration of Graphics object.
+        myGraphicsContainer = myGraphics.BeginContainer();
+        ...
+        myGraphics.EndContainer(myGraphicsContainer);
+
+    Containers can be nested within containers.
+
+Bitmap::
+    + palette-indexd bitmap
+
+
+

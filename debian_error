@@ -3,3 +3,5 @@ E: Unable to lock the administration directory (/var/lib/dpkg/), is another proc
 A: sudo rm /var/lib/dpkg/lock
 E: startx ... lost
 A: add .xinitrc file
+E: a start job is running for raise network interface
+A: modfy "TimeoutStartSec=2s" in /etc/systemd/system/network-online.target.wants/networking.service

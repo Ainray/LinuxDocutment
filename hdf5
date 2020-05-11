@@ -1,0 +1,18 @@
+python module::
+    h5py
+
+list::
+members::
+member::
+    f.keys()
+    f['/rxs'].keys()
+
+dataset::
+shape::
+dimension::
+type::
+    Ez=file['/rxs/rx1/Ez']
+    Ez.shape
+    Ez.dtype
+    
+

@@ -1,0 +1,126 @@
+Help::
+reference::
+    https://www.tenouk.com/mfcprojectdownload.html
+    mfc_tutorial_Tenouk.pdf
+
+General::
+    A GDI bitmap is simply another GDI object, such as a pen or a font.
+    How to display or print a bitmap:
+        + create a bitmap
+        + select it into the device context
+            a memory device context is needed to do it.
+        + deselect and delete it
+    
+create::
+    method 1, load from resources
+        + create bitmap resource file by "resource editor", convert other 
+    format pictures is also allowed.
+        "resource compiler" will reads the DIB from disk and stores it
+    in the projects's RES file.
+        "linker" copies the DIB into EXE file
+        + load it in CMyview::OnDraw(CDC *pDC) by LoadBitmap
+            CMyView::OnDraw(CDC *pDC)
+            {
+                CBitmap bitmap;
+                btimap.LoadBitmap(IDB_BMDIRD);
+            }
+device context::
+    method 1, directly get from OnDraw funtion
+    method 2, create from client
+        CMyView::OnInitialUpdate()
+        {
+            CClientDC dc(this);
+            OnPrepareDC(&dc);
+            dc.DPtoLP(&sizeDest);
+        }
+
+
+memory device context::
+
+            CDC dcMemory;
+            dcMemory.CreateCompatibleDC(pDC);
+
+        
+select bitmap::
+            dcMemory.SelectObject(&bitmap);
+
+copy::    
+size::
+    + hard coded,
+        CSize(54, 96);
+    + dynamically
+        BITMAP bm;
+        bitmap.GetObject(sizeof(bm), &bm);
+        CSize sizeSrc;
+        sizeSrc.cx = bm.bmWidth;
+        sizeSrc.cy = bm.bmHeight;
+        sizeDest = sizeSrc;
+        
+display Mode::
+    + MM_TEXT
+            CMyView::OnDraw(CDC *pDC)
+            {
+                pDC->BitBlt(100, 100, 54, 96, &dcMemory, 0, 0, SRCCOPY);
+            }
+    + MM_LOENGLISH
+            if bitmap display mapping mode is not MM_TEXT and we want it to occupy a 54x96 rectangle, 
+                CSize size(54, 96);
+                pDC->DPtoLP(&size);
+                pDC->SetStretchBltMode(COLORONCLOR);
+                pDC->StrechBlt(0, 0, size.cx, -size.cy, &dcMemory, 0, 0. 54, 96, SRCCOPY);
+            If GDI really strech or compress bits, the display update is slow
+
+As a whole::
+    Example 1:
+            CMyView::OnDraw(CDC *pDC)
+            {
+                CBitmap bitmap;
+                CDC dcMemory;
+                bitmap.LoadBitmap(IDB_BMBIRD);  //convert resource-based DIB to a GDI bitmap
+                dcMemory.CreateCompatibleDC(pDC); //create memory device context compatible with specifed device
+                dcMemory.SelectObject(&bitmap);   //select an object into device context
+                pDC->BitBlt(100, 100, 54, 96, &dcMemory, 0, 0, SRCCOPY);
+                // (100, 100) to upper-left of display
+                // CDC destructor deletes dcMemory
+                // CBitmap destructor delete bitmap when bitmap is deselected
+            }
+
+    Example 2:
+        
+    CMyView::OnInitialUpdate()
+    {
+        CClientDC dc(this)
+        OnPrepareDC(&dc);
+        
+        ...
+        dcMemory.CreateCompatibleDC(&dc);
+        ...
+        // get size of bitmap
+        bitmap.GetObject(sizeof(bm), &bm);
+        ...
+        sizeDest = sizeSrc;
+        dc.DPtoLP(&sizeDest);
+    }
+
+flicker::
+MyMFC26B::
+    CMyView::OnInitialUpdate()
+    {
+        CScrollView::OnInitialUpdate();
+        CSize sizeTotal(800, 1050);
+        CSize sizePage(sizeTotal.cx/2, sizeTotal.cy/2);
+        CSize sizeLine(sizeTotal.cx/50, sizeTotal.cy/50);
+        SetScrollSizes(MM_LOENGLISH, sizeTotal, sizePage, sizeLine);
+        if(dcMemory.GetSafeHdc() == NULL)
+        {
+            CClientDC dc(this);
+            OnPrepareDC(&dc);
+            CRect rectMax(0, 0, sizeTotal.cx, -sizeTotal.cy);
+            dc.LPtoDP(rectMax);
+            dcMemory.CreateCompatibleDC(&dc);
+            bitmap->CreateCompatibleBitmap(&dc, rectMax.right, rectMax.bottom);
+            dcMemory->SetMapMode(MM_LOENGLISH);
+        }
+    }
+
+

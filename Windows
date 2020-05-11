@@ -14,3 +14,8 @@ encoding::
 active page::
 code page::
     chcp // run in cmd window
+    
+photoshop memory problem::
+cannot save web format::
+    HKEY_CURRENT_USER\Software\Adobe\Photoshop\60.0
+        overridephysicalMemoryMB REG_DWORD 0xfa0(4000)

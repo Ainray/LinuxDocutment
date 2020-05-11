@@ -23,3 +23,9 @@ Github sites::
             git submodule update --init --recursive
             git clone --depth=1 git@github.com:vim-syntastic/syntastic.git
 
+        update 
+            git pull
+            git submodule update
+
+        ssh access
+            

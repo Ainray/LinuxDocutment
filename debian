@@ -365,6 +365,18 @@ swap::
 
         free -h
 
+input::
+ibus::
+fcitx::
+    + ibus block fcitx, so use fcitx after you uninstall ibus
+    + zoom depend on ibus
+    + ibus cannot add wubi in buster, install ibus-wayland
+    + ibus do not start automatically, add "ibus-daemon" into startup
+    + environment variables, in .xinitrc
+
 startx::
 xinitrc::
     exec xfce4-session
+
+speedup::
+

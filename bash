@@ -112,3 +112,10 @@ time::
     measure time of shell commands,
         time ls -al
     
+expansion::
+brace::
+brace expansion::
+{}::
+
+    {A..C}  #two dots
+

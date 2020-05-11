@@ -1,0 +1,4 @@
+memory management::
+    + reference counting
+        For example, VTK, refer to:https://www.aosabook.org/en/vtk.html
+    + garbage collection

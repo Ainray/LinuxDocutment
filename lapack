@@ -1,0 +1,96 @@
+virtual memory::
+refer::
+    https://en.wikipedia.org/wiki/Virtual_memory
+
+    A memory management technique provides a flat storage resources that
+actually available on a given machine, may includes disk.
+
+computer multitasking::
+
+    + multiprogramming
+
+        The second program is given a chance to run while
+    the first program is waiting for peripheral access.
+
+    + cooperative multitasking
+        Application voluntarily ceded time to one another regularly.
+    A poorly designed program either by performing extensive calculations
+    or by busy waiting, would cause the whole system to hang.
+
+    + preemptive multitasking
+        Used by Unix-like, and modern Windows, which allow OS to process
+    slices of operating time.
+
+    + real time
+        Hierarchical interrupt system is coupled with process
+    prioritization to ensure that key actives were given a greater
+    share available process time.
+
+    + multithreading
+
+        Threads are described as lightweight process because switching
+        between threads does not involve changing the memory context.
+vector processor::
+array processor::
+    + instruction set containing instructions that operate on one dimensional arrays of data (called vector.)
+
+superscalar::
+Refer to::
+    https://en.wikipedia.org/wiki/Superscalar_processor
+
+    An instruction-level parallelism within a single processor, by
+dispatching multiple instructions to different execution units on the
+processor. 
+    Each execution unit is a logical arithmetic unit,
+instead of a separate processor/core.
+    Another technique pipelining dividing the execution unit into
+different phases.
+
+    + single-core superscalar processor is classified as SISD
+    + single-core superscalar supporting short vector oporations, SIMD
+    + multi-core superscalar processor, MIMD
+
+distributed memory::
+    + multiprocessor computer system in which each processor has its own private memory
+    + computational tasks can only operate on local data
+    + communication is need to operate remote data
+
+shared memory::
+    + multiprocessor use a single memory space
+
+SuplerLU::
+    + direct solution of large, sparse, nonsymmetric systems of linear equations
+    + MPI
+    + OpenMP
+    + CUDA
+
+NUMPS::
+    + symmetric positive definite matrices
+    + general symmetric
+    + general unsymmetric matrices
+    + OpenMP within each MPI process
+    + distributed memory parallel computers
+
+LAPACK
+    http://netlib.org/scalapack/slug/node9.html#SECTION04110000000000000000
+    http://www.netlib.org/lapack/lug/node8.html
+
+    + linear equations, linear least squares problems, eigenvalue
+    problems, singular value problems, matrix factorizations, condition
+    number estimation
+
+    + dense and band matrices, not general spare matrices
+
+    + designed to 
+        . single-processor vector supercomputers(then-modern, 1970s,1980s)
+        . high-performance super-scalar workstations
+        . share-memory parallel computers
+
+    + satisfactorily on scalar machines(PC's, workstations, mainframes) 
+
+ScaLAPACK
+    http://netlib.org/scalapack/slug/node9.html#SECTION04110000000000000000
+    + distributed-memory message-passing MIMD computers 
+    + networks of workstations supporting PVM(droped since 2.0) and/or MPI
+    + SPMD(single program multiple data style)
+    + dense matrices and banded linear systems

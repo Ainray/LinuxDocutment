@@ -251,3 +251,16 @@ sed 's/[A-Z]/\u&/g'
 seq 65 65 1365
 xxd test-20190712-fit/test_realdata.txt
 sudo dpkg --audit
+wget -r -np -R "index.html*" https://www.tenouk.com/mfcproject/mymfc25A/
+locale -a
+gnome-screenshot -ac
+gnome-screenshot -ac
+tree . -P '*.f90|*.F90' -I 'Release|Debug'
+aplay -L |grep :CARD
+VBoxManage controlvm Win10 poweroff
+sudo dpkg-divert --package im-config --rename --remove /usr/bin/ibus-daemon
+sudo dpkg-divert --package im-config --rename /usr/bin/ibus-daemon
+convert Ainray_ID1.jpg -print "%wx%h" /dev/null
+sudo dpkg -i Downloads/anydesk_5.5.4-1_amd64.deb
+dpkg -l anydesk
+sudo dpkg -P anydesk

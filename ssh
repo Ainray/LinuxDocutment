@@ -153,8 +153,17 @@ local ssh configuration::
                 ServerAliveInterval 10
             # ssh will send a keep-alive packet every 10 seconds, so then my connection
             # is only terminated by loss of network connection.
+
 putty::
             + puttygen generate rsa-key pairs
+            NOTE: in some case, putty complain that server refuse ..., you can change private keys from key-gen generation
             + save public/private keys in the same directory, important
-            + copy public key and in server file: /home/inray/.ssh/authorized_keys 
+            + copy public key and add into server file: /home/inray/.ssh/authorized_keys 
             + edit it into one line
+
+            configuration
+                + Host Name IP
+                + connection/Data/Auto-login username
+                + Connection/SSH/Auth/Private key file for authentication
+                + Window/Appearance/Font
+

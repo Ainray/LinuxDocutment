@@ -1,0 +1,6 @@
+audio::
+sound::
+alsa::
+   amixer
+   alsamixer
+   alsa-plugins
