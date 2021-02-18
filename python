@@ -64,19 +64,35 @@ IDE in vim configuration:
 
         in ~/.vimrc
                 
-
                 
-                
-
-                
-
-        
+array::
+numpy::
+ndarray::
+        numpy.ndarray
+            arr=numpy.linspace(0.001,0.06,101)
+        get size by
+            np.size(arr, 0)
+            [m,n]=arr.shape
+        tranpose by
+            np.transpose(arr)
+        multiply by
+            y=np.multiply(x,2)
 
 array::
-        numpy.ndarray
-    
-        t=numpy.linspace(0.001,0.06,101)
+concatenate::
+    x1 = np.repeat(1,7)
+    x2 = np.array([1, 2, 3, 4, 5, 6, 7, 8])
+    A = np.concatenate([x1,x2])
 
+ndarray::
+        >>>type(imhs1)
+        <type 'numpy.ndarray'
+        
+        >>>imhs1.shape
+        (10001,5)
+        >>>imhs1[1,1]
+        >>>imhs1[1,]
+        >>>imhs1[:,1]
 string::
             Define multiple-line string by,
                 error = """
@@ -221,16 +237,6 @@ module::
             dir(sys)
             dir(__buildins__)
 
-ndarray::
-        >>>type(imhs1)
-        <type 'numpy.ndarray'
-        
-        >>>imhs1.shape
-        (10001,5)
-        >>>imhs1[1,1]
-        >>>imhs1[1,]
-        >>>imhs1[:,1]
-            
 environment variables::
             get environment variables
                 os.environ.get('HOME')
@@ -355,15 +361,31 @@ class::
 tuple::
     
 symbol::
+integrate::
     integrate by,
 
         from sympy import *
         from sympy.abc import *
         integrate(exp(-t),(t,0,oo))
+        integrate(r*2*(r*r+a*a)**(-2.5),(r,0,b))
+fft::
+fourier::
 
 ipython::
     zoom in and out by
         ctrl+shift+"+", ctrl+"-"
+
+    list variables
+        whos
+        who
+
+    run script by
+        run main.py
+
+    debug script by
+        run -d main.p
+
+    debug command
 
 matrix::
 linear::
@@ -375,12 +397,7 @@ linear equation::
     bt=np.matmul(AT,b)
     x=np.linalg.solve(ATA,bt)
 
-array::
-concatenate::
-    x1 = np.repeat(1,7)
-    x2 = np.array([1, 2, 3, 4, 5, 6, 7, 8])
-    A = np.concatenate([x1,x2])
-
+            
 codecheck::
     W401,  # noqa
     
@@ -389,3 +406,4 @@ h5py::
 hdf5::
     is_hdf5
     
+python3 -mpip list

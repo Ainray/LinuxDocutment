@@ -264,3 +264,19 @@ convert Ainray_ID1.jpg -print "%wx%h" /dev/null
 sudo dpkg -i Downloads/anydesk_5.5.4-1_amd64.deb
 dpkg -l anydesk
 sudo dpkg -P anydesk
+od -j 100 -tfD site8.MTSK
+od -j 100 -td4 site81.MTSK  |less
+od  -v -Ad -N 100 -ta site81.MTSK
+od  -v -Ad -j 100 -N 8 -tfD site81.MTSK
+od -N 100 -S4 MT8C1013.clc
+xxd -c 25 B0058U0C.TBL > /tmp/1
+sudo dpkg --remove linuxqq
+sudo apt --fix-broken install
+convert Ainray-DLL-Account.jpg -print "%wx%h\n" 2>/dev/null
+sudo python3 -mpip install --upgrade matplotlib
+ls -R /sys/class/drm/*/status |xargs cat
+sudo VBoxManage modifymedium WinXP.vdi --compact
+gpg --keyserver keyserver.ubuntu.com --recv-keys 78BD65473CB3BD13
+gpg -a --export 7721F63BD38B4796 | sudo apt-key add -
+git branch -a
+git checkout develop

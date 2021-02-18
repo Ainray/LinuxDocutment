@@ -6,6 +6,8 @@ replay::
     script -t 2>~/update-buster0.time -a ~/update-buster0.script
     scriptreplay update-buster0.time update-buster0.script
 
+bell::
+    set bell-style none  # in /etc/inputrc
 debug::
     bash -x script > log
 

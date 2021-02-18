@@ -1,7 +1,20 @@
 E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable)
 E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
 A: sudo rm /var/lib/dpkg/lock
+E: Could not get lock /var/lib/apt/lists/lock - open (11:Resource temporarily unavailable)
+E: Unable to lock directory /var/lib/apt/lists/
+A: sudo rm /var/cache/apt/archives/lock
+   sudo rm /var/lib/apt/lists/lock
 E: startx ... lost
 A: add .xinitrc file
 E: a start job is running for raise network interface
-A: modfy "TimeoutStartSec=2s" in /etc/systemd/system/network-online.target.wants/networking.service
+A: modify "TimeoutStartSec=2s" in /etc/systemd/system/network-online.target.wants/networking.service
+E: GPG error: http://dl.google.com/linux/earth/deb stable Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 78BD65473CB3BD13
+A: gpg --keyserver keyserver.ubuntu.com --recv-keys 78BD65473CB3BD13
+   gpg -a --export 7721F63BD38B4796 | sudo apt-key add -
+   possible server is,
+        keyring.debian.org
+        keyserver.ubuntu.com
+        pgp.mit.edu
+        subkeys.pgp.net
+        www.gpg-keyserver.de

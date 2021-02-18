@@ -1,0 +1,39 @@
+refer::
+    https://doc.qt.io/qt-5/configure-options.html
+
+build::
+
+    + install python/ruby/perl, according to README file, make sure them added
+to path, check in cmd.
+    + run "x64 Native tools command prompt for VS 2019"
+    + configure by 
+        configure -prefix C:\Qt\ -mp -debug-and-release -opensource -force-debug-info -opengl dynamic  -nomake examples -nomake tests -skip coin -skip qtactiveqt -skip qtandroidextras -skip qtconnectivity -skip qtmacextras -skip qtmultimedia -skip qtpurchasing -skip qtscript -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech -skip qtwayland -skip  qtwebchannel -skip qtwebglplugin -skip qtwebengine -skip qtx11extras -skip qtgamepad -skip qtlocation -skip qtserialbus
+    + nmake (4-cores about 10 hours)
+    + nmake install (about one hour)
+
+build in x86 support
+    + run "x86 Native tools command prompt for VS 2019"
+    + install python/ruby/perl, according to README file, make sure them added
+to path, check in cmd.
+    + create build path
+    + cd build path
+    + available platform, find in qtbase\mkspecs directory
+		In linux, clang or g++ toolchain are supported
+			./configure -platform linux-clang  #clang
+			./configure -platform linux-g++    #g++
+			./configure -platform linux-g++-32
+		In windows, mingw32 or vs toolchain are supported
+			configure.bat -platform win32-g++  
+			configure.bat -platform win32-msvc
+    + configure by 
+      ..\qt-everywhere-src-5.15.2\configure -prefix C:\Qt\Qt5.15.2\qt-5.15.2-winrt-x86-msvc2019 -mp -platform win32-msvc -opensource -debug -debug-and-release -force-debug-info -opengl dynamic -nomake examples -nomake tests -skip qtactiveqt -skip qtandroidextras -skip qtconnectivity -skip qtmacextras -skip qtmultimedia -skip qtpurchasing -skip qtscript -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech -skip qtwayland -skip qtwebchannel -skip qtwebglplugin -skip qtwebengine -skip qtx11extras -skip qtgamepad -skip qtlocation -skip qtserialbus
+
+ 
+    + nmake
+    + nmake install
+
+    or alternatively by jom (https://wiki.qt.io/Jom)
+    + jom /W /S -j4
+    + jom install
+
+

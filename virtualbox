@@ -15,6 +15,20 @@ usb support::
 resize 
         sudo VBoxManage modifymedium /home/inray/win10/Win10.vdi --resize 81200
 
+compact::
+    method 1,
+
+        1) sdelete -z c: (very slow)
+        2) shutdown windows
+        3) sudo VBoxManage modifymedium WinXP.vdi --compact
+
+    method 2,
+
+        1)compact in diskmgmt.msc in windows
+        2)create a new partition without checking fast format
+        3)shutdown windows
+        4) sudo VBoxManage modifymedium WinXP.vdi --compact
+
 networks::
         nat limitation,
             + ICMP protocol limitations, ping/tracerouting like debugging

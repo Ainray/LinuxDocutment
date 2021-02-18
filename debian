@@ -380,3 +380,16 @@ xinitrc::
 
 speedup::
 
+
+debian-live:
+    lsblk, list disks
+    sudo umount /dev/sdx1
+    sudo dd bs=4M if=/path to debian*.iso of=/dev/sdx status=progress oflag=sync
+
+    #get root
+    sudo passwd
+    root
+    root
+    su 
+    root
+    #work

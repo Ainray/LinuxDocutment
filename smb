@@ -23,3 +23,16 @@
     directory mask = 0700
 
 sudo smbpasswd -a inray
+
+symbol::
+links::
+
+    [global]
+    allow insecure wide links = yes
+    [share] #this means share directory
+    follow symlinks = yes
+    wide links = yes
+
+problem::
+network resources are not enough::
+    restart smbd service

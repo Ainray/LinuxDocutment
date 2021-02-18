@@ -1,0 +1,12 @@
+configuration::
+
+    /etc/pacman.d/mirrorlist.mingw32
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
+    /etc/pacman.d/mirrorlist.mingw64
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64
+    /etc/pacman.d/mirrorlist.msys
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
+
+    pacman -Syu
+    pacman -Su
+    pacman -S --needed base-devel mingw-w64-x86_64-toolchain
