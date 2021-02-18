@@ -126,7 +126,7 @@ WIFI device must support AP mode
                 ignore_broadcast_ssid=0
                 # WPA 2
                 wpa=2
-                wpa_passphrase=235111235
+                wpa_passphrase=
                 wpa_key_mgmt=WPA-PSK
                 # wpa_pairwise for WPA, rsn_pairwise for WPA2
                 wpa_pairwise=TKIP
@@ -220,7 +220,7 @@ WIFI device must support AP mode
                             wlan0_ip_range="192.39.12.1/24"
                             wlan0_mask="255.255.255.0"
                             wlan0_ssid="ainray"
-                            wlan0_psk="235111235"
+                            wlan0_psk=""
                         #
                         # local LAN interface, eth0, because plugin and unplug, its name is determined. My Debian Stretch 
                         # name it maybe eth0 or exn${MAC}. More refer to:
